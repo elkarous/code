@@ -1,0 +1,94 @@
+<div class="container-fluid">
+
+  <div class="row justify-content-center" style="background-color: #3c4858">
+
+    <div class="col-6 col-lg-6 col-xl-6">
+      <div class="header mt-md-5">
+        <div
+          class="
+            header-body
+            d-flex
+            justify-content-between
+            align-items-center
+            pt-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h1 class="header-title">Demande de Rendez-vous</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="justify-content-center mt-5 align-items-center card">
+    <div class="row">
+      <div class="col-5">
+        <img src="../../assets/img/PortlMedical.png" alt="logo" class="img-fluid ">
+      </div>
+      <span class="vertical-line col-1"></span>
+      <div class="col-6 align-self-center">
+        <div class="card-header text-center">
+          <p class="m-0 font-weight-bold">Détails de rendez-vous</p>
+        </div>
+        <form [formGroup]="ajoutRDVform">
+          <div class="card-body">
+            <div class="row">
+              <div class="form-group col-lg-12">
+                <label class="form-label">email</label>
+                <input class="form-control" type="email" placeholder="entrer votre email"
+                       formControlName="patientEmail">
+              </div>
+              <div class="form-group col-lg-12">
+                <label class="form-label">Medecin</label>
+                <select class="form-control" formControlName="user" [(ngModel)]="id">
+                  <option selected="selected">choisir un medecin</option>
+                  <option *ngFor="let medecin of medecins"
+                          [value]="medecin.id"> {{medecin.nom}} {{medecin.prenom}} </option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-lg-12">
+                <label class="form-label">Date</label>
+                <input type="date" class="form-control" placeholder="yyyy-MM-dd" formControlName="date"
+                       [(ngModel)]="date">
+              </div>
+              <div class="form-group col-lg-12">
+                <label class="form-label">Heure</label>
+                <select class="form-control" formControlName="heure" [(ngModel)]="heur">
+                  <option selected="selected">choisir une heure</option>
+                  <option *ngFor="let h of heures" [value]="h">{{h}}</option>
+                </select>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
+      </div>
+
+      <div class="row align-items-center col-lg-12 justify-content-end">
+        <div class="col-auto">
+          <!-- Button -->
+          <button class="btn btn-danger" type="reset" [routerLink]="''">
+            Annuler
+          </button>
+        </div>
+
+        <div class="col-auto">
+          <!-- Button -->
+          <button class="btn btn-info " (click)="ajoutRdv()">Ajouter</button>
+        </div>
+      </div>
+
+
+    </div>
+    <div>
+    </div>
+  </div>
+</div>
+<p-dialog header="Confirmer un rendez_vous" [(visible)]="displayBasic1" [modal]="true" [style]="{width: '50vw'}"
+          [baseZIndex]="10000">
+  <p>Votre demande a été envoyer avec succées. Vous allez revecevoir un email de réponse </p>
+</p-dialog>

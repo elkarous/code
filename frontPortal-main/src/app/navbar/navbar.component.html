@@ -1,0 +1,43 @@
+ <mat-toolbar>
+      <p class="titre">
+        Timesheet
+      </p>
+      <span class="example-spacer"></span>
+      <div class="navcontent" >
+      <a class="login m-3"[routerLink]="['/dashboard/calender']">
+        Calendrier
+      </a>
+        <a class="login m-3"[routerLink]="['/dashboard/employee']">
+          Gestion des employées
+        </a>
+      <a class="login m-3" [routerLink]="['/dashboard/project']">
+        Gestion des projets
+      </a>
+        <a class="login m-3"[routerLink]="['/dashboard/team']">
+          Gestion des équipes
+        </a>
+        <a class="login m-3" [routerLink]="['/dashboard/client']">
+          Gestion des clients
+        </a>
+        <button mat-icon-button  [matMenuTriggerFor]="menu" class="example-icon favorite-icon"
+                aria-label="Example icon-button with heart icon" >
+          <mat-icon  class ="ic">account_circle</mat-icon>
+          <!--<img [src]="retrievedImage" (error)="onError()" class="rounded-circle  " height="28" width="28" alt="image">-->
+        </button>
+        <mat-menu #menu="matMenu">
+
+                <span mat-menu-item class="text-center">
+                    <p class="name">{{user?.nom}} {{user?.prenom}}</p>
+                    <p class="designation">Member since {{user?.creationDate|date}} </p>
+
+                  </span>
+
+          <hr>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            <span>Se déconnecter</span>
+          </button>
+        </mat-menu>
+      </div>
+    </mat-toolbar>
+
