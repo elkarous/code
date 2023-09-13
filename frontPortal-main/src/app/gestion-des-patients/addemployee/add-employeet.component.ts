@@ -5,6 +5,7 @@ import {ToastrService} from 'ngx-toastr';
 import {AccountService} from 'src/app/services/account.service';
 import {UserEntity} from 'src/models/userEntity';
 import {Role} from '../../../models/Role';
+import {TeamService} from "../../services/team.service";
 
 @Component({
   selector: 'app-addemployee',
@@ -16,15 +17,17 @@ export class AddEmployeetComponent implements OnInit {
   role = new FormControl('');
   user: UserEntity = new UserEntity();
   hide = true;
-
+  teamList = [];
 
   constructor(private accountService: AccountService,
               private toast: ToastrService,
-              private route: Router
+              private route: Router,
+              private teamService:TeamService,
   ) {
   }
 
   ngOnInit(): void {
+    this.getAllTeam();
   }
 
 
@@ -45,7 +48,15 @@ export class AddEmployeetComponent implements OnInit {
         });
 
   }
+  getAllTeam(){
+    this.teamService.getAll().subscribe((response)=>{
+      this.teamList = response;
+    })
 
+  }
+  equipeCompare(equipe:any, result:any){
+    return equipe.idE === result.idE;
+  }
 }
 
 

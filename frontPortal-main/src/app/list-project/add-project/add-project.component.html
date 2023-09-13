@@ -1,1 +1,47 @@
-<p>add-project works!</p>
+<div class="card-header">
+  <h2 mat-dialog-title > Modifier le  projet </h2>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Nom de projet</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="activite.nomA" placeholder="Entrer le nom ">
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>discription de projet</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="activite.disc" placeholder="discription">
+  </mat-form-field>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Date de debut</mat-label>
+    <input matInput [(ngModel)]="activite.dateDebut"[matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Date de fin</mat-label>
+    <input matInput [(ngModel)]="activite.dateFin"[matDatepicker]="picker1">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Type de projet</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="activite.type" placeholder="Type le nom ">
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Etat de projet</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="activite.etat" placeholder="Etat">
+  </mat-form-field>
+</div>
+<mat-form-field class="col-6" appearance="fill">
+  <mat-label>Equipe</mat-label>
+  <mat-select   [(ngModel)]="activite.equipe" [compareWith]="equipeCompare" placeholder="Equipe" required>
+    <mat-option *ngFor="let team of teamList" [value]="team" > {{team.nomE}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button mat-button (click)="ajoutActivite()" cdkFocusInitial mat-dialog-close>Modifier</button>
+</mat-dialog-actions>

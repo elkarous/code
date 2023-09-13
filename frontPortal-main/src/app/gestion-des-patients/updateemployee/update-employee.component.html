@@ -1,8 +1,8 @@
 <div class="card-header">
-<h2 mat-dialog-title style="color: white;" > Mettre à jour le profile de {{user.nom}} {{user.prenom}} </h2>
+<h2 mat-dialog-title  > Mettre à jour le profile de {{user.nom}} {{user.prenom}} </h2>
 </div><mat-dialog-content>
 
-      
+
   <div class="row">
     <mat-form-field class="col-6" appearance="fill">
         <mat-label>Prenom</mat-label>
@@ -93,8 +93,17 @@
   <mat-label>NumTelephone</mat-label>
   <input matInput maxlength="8" [(ngModel)]="user.numtelephone" placeholder="numtelephone ">
 </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Equipe</mat-label>
+    <mat-select   [(ngModel)]="user.equipe" [compareWith]="equipeCompare" placeholder="Equipe" required>
+      <mat-option *ngFor="let team of teamList" [value]="team" > {{team.nomE}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
-
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Mot de passe</mat-label>
+    <input matInput [(ngModel)]="user.password"  type="password" placeholder="Mot de passe">
+  </mat-form-field>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Fermer</button>

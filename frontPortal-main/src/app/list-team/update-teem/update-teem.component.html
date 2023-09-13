@@ -1,1 +1,16 @@
-<p>update-teem works!</p>
+<div class="card-header">
+  <h2 mat-dialog-title > Modifier l'équipe </h2>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Nom d'equipe</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="team.nomE" placeholder="Entrer le prenom ">
+  </mat-form-field>
+
+
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button mat-button (click)="updateUser()" cdkFocusInitial mat-dialog-close>Modifier</button>
+</mat-dialog-actions>

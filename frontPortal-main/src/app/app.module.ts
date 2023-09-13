@@ -32,19 +32,16 @@ import {UpdateEmployeeComponent} from './gestion-des-patients/updateemployee/upd
 import {AddEmployeetComponent} from './gestion-des-patients/addemployee/add-employeet.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
-import {RendezVousComponent} from './rendez-vous/rendez-vous.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatDividerModule} from '@angular/material/divider';
 
 import {AcceuilComponent} from './acceuil/acceuil.component';
-import {DemandeRendezVousComponent} from './demande-rendez-vous/demande-rendez-vous.component';
 import {CalenderComponent} from './calender/calender.component';
 import {FullCalendarModule} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from 'primeng';
-import {ListeRendezVousComponent} from './liste-rendez-vous/liste-rendez-vous.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import { DahsbordComponent } from './dahsbord/dahsbord.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -76,11 +73,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     StatistiquesComponent,
     UpdateEmployeeComponent,
     AddEmployeetComponent,
-    RendezVousComponent,
     AcceuilComponent,
-    DemandeRendezVousComponent,
     CalenderComponent,
-    ListeRendezVousComponent,
     NavbarComponent,
     DahsbordComponent,
     ListProjectComponent,

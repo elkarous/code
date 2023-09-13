@@ -127,5 +127,8 @@
       }
     }
   },
-  "defaultProject": "PortalMedical"
+  "defaultProject": "PortalMedical",
+  "cli": {
+    "analytics": "53289bc5-1519-465f-8711-64b2608d18d7"
+  }
 }

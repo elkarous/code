@@ -91,11 +91,11 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
   }
 
   add() {
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
+    dialogConfig.height = '90%'
     this.dialog.open(AddEmployeetComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => this.ngAfterViewInit());

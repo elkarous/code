@@ -9,6 +9,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {Patient} from "../../models/Patient";
 import {PatientService} from "../services/patient.service";
+import {Activite} from "../../models/Activite";
 
 
 
@@ -22,7 +23,7 @@ export class CalenderComponent implements OnInit {
 
   Events = [];
   displayModal=false;
-  RendezvousS: RendezVousEntity[] = [];
+  RendezvousS: Activite[] = [];
   calendarOptions: CalendarOptions;
   rdvId: number;
   medecinId: number
@@ -76,7 +77,7 @@ this.Events=[]
       initialView: 'dayGridMonth',
       dateClick: this.onDateClick.bind(this),
       eventClick: this.onEventClick.bind(this),
-      eventColor: '#5bc0de',
+      eventColor: '#0c4d64',
       height:600,
       eventBorderColor:'#5bc0de',
       editable:true
@@ -153,19 +154,21 @@ this.Events=[]
 
 
   getAllRdv() {
-    this.rdvService.getrdvByState("confirmed").subscribe(data => {
+    this.rdvService.getrdvByState().subscribe(data => {
       this.RendezvousS = data;
       this.calendarOptions.events = [];
       for (let rdv of this.RendezvousS) {
-        let daystart = formatDate(rdv.dateOfApt, 'yyyy-MM-dd HH:mm:ss', 'en_Us');
-        let start = formatDate(rdv.dateOfApt, 'HH:mm', 'en_Fr');
+        let daystart = formatDate(rdv.dateDebut, 'yyyy-MM-dd HH:mm:ss', 'en_Us');
+        let dayFin = formatDate(rdv.dateFin, 'yyyy-MM-dd HH:mm:ss', 'en_Us');
+        let start = formatDate(rdv.dateDebut, 'HH:mm', 'en_Fr');
         let event = {
-          id: rdv.idapt,
-          title: rdv.patientEmail,
+          id: rdv.idA,
+          title: rdv.type,
           start: daystart.toString(),
+          end:dayFin.toString(),
           background: '#1abc9c',
           extendedProps: {
-            user: rdv.user.id,
+            user: 1,
             date: start.toString()
           }
 

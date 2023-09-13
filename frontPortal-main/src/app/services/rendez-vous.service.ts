@@ -3,12 +3,13 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {RendezVousEntity} from 'src/models/RendezVous';
 import {TokenService} from '../Authentification/token.service';
+import {Activite} from "../../models/Activite";
 
 @Injectable({
   providedIn: 'root'
 })
 export class RendezVousService {
-  private url = 'http://localhost:8085/rendezvous/';
+  private url = 'http://localhost:8085/activite/';
 
   constructor(private Token: TokenService, private http: HttpClient) {
   }
@@ -37,8 +38,8 @@ export class RendezVousService {
   getAllrdv():Observable<RendezVousEntity[]>{
     return this.http.get<RendezVousEntity[]>(this.url)
   }
-  getrdvByState(state : string):Observable<RendezVousEntity[]>{
-    return this.http.get<RendezVousEntity[]>(this.url+'getByState/'+state)
+  getrdvByState():Observable<Activite[]>{
+    return this.http.get<Activite[]>(this.url+'getAll/')
 }
 refuserRdv(rdv:RendezVousEntity): Observable<RendezVousEntity>{
   return this.http.put<RendezVousEntity>(this.url+'refuser', rdv)

@@ -2,6 +2,7 @@ import { NumberFormatStyle } from "@angular/common";
 import { Gouvernerats } from "./Gouvernerats";
 import { Role } from "./Role";
 import { Sexe } from "./Sexe";
+import {Equipe} from "./Equipe";
 
 export class UserEntity{
     id:number;
@@ -19,4 +20,5 @@ export class UserEntity{
    pays:string;
    sexe:Sexe;
    numtelephone:string ;
+  equipe:Equipe;
   }

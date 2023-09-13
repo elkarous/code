@@ -1,14 +1,17 @@
 mat-toolbar{
-  background: #343a40;
-  height: 58px;
+  background:  #5793ce;;
+  height: 10%;
 }
 .login{
   color: white;
   text-decoration: none;
+  font-size: medium;
+  font-weight: normal;
 }
 .login:hover{
-  color: #1abc9c;
+  color: #ff2c9c;
   text-decoration: none;
+  font-weight: normal;
 }
 /*.titre{*/
 /*  margin-left: 100px;*/
@@ -17,10 +20,17 @@ mat-toolbar{
 /*  color: white;*/
 /*}*/
 .container{
-  background-color: #1abc9c;
+  background-color: #ff2c9c;
   font-weight: bold;
 
 }
 .navcontent{
-  margin-left: 150px;
+  margin-left: 20%;
+}
+.title{
+  color: black;
+  border: solid 1px ;
+  border-radius: 3px;
+  padding: 4px;
+  font-weight: normal;
 }

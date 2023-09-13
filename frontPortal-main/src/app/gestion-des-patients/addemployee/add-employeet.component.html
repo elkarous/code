@@ -1,5 +1,5 @@
 <div class="card-header">
-<h2 mat-dialog-title style="color: rgb(255, 255, 255);"> Ajouter un nouveau employé </h2>
+<h2 mat-dialog-title > Ajouter un nouveau employé </h2>
 </div>
     <div class="row">
     <mat-form-field class="col-6" appearance="fill">
@@ -95,11 +95,16 @@
             <input matInput [(ngModel)]="user.numtelephone" maxlength="8" placeholder="Taper le numéro du telephone">
         </mat-form-field>
       <mat-form-field class="col-6" appearance="fill">
-        <mat-label>Mot de passe</mat-label>
-        <input matInput [(ngModel)]="user.password"  type="password" placeholder="Mot de passe">
+        <mat-label>Equipe</mat-label>
+        <mat-select   [(ngModel)]="user.equipe" [compareWith]="equipeCompare" placeholder="Equipe" required>
+          <mat-option *ngFor="let team of teamList" [value]="team" > {{team.nomE}}</mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
-
+<mat-form-field class="col-6" appearance="fill">
+  <mat-label>Mot de passe</mat-label>
+  <input matInput [(ngModel)]="user.password"  type="password" placeholder="Mot de passe">
+</mat-form-field>
 
 
 <mat-dialog-actions align="end">

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.example.PortalMedical.DTO.ResetPassword;
 import com.example.PortalMedical.DTO.UserDTO;
-import com.example.PortalMedical.enteties.RendezVousEntity;
 import com.example.PortalMedical.security.jwt.JwtUtil;
 
 @Service
@@ -58,60 +57,5 @@ public class PasswordServices {
             this.emailSender.send(message);
         }
     }
-    public void EnvoyerEmailAjout(RendezVousEntity rdv) {
-		MimeMessage mimeMessage = emailSender.createMimeMessage();
-		try {
-
-		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-
-		mimeMessageHelper.setSubject("Bienvenue a notre Portal Medical ");
-		mimeMessageHelper.setFrom("contact@dsms.world");
-		mimeMessageHelper.setTo(rdv.getPatientEmail());
-		String content = "Bonjour ( Mme/M), "+ 
-		"\n"
-		+ "<br>votre demande de rendez vous est confirmer pour: \n" 
-		
-		+ " <br><br> date:"+rdv.getDateOfApt().toLocaleString()
-		+ " <br><br> avec docteur : "+rdv.getUser().getNom() +" " +rdv.getUser().getPrenom()
-		+ " <br><br> Cordialement,";
-
-		mimeMessageHelper.setText(content);
-		mimeMessageHelper.setText("<html><body><p>" + content
-		+ "</p> <img width=\"50\" alt=\"Apen\"></body></html>",
-		true);
-		emailSender.send(mimeMessageHelper.getMimeMessage());
-		} catch (MessagingException e) {
-		e.printStackTrace();
-		}
-
-		}
-    public void EnvoyerEmailRefuser(RendezVousEntity rdv) {
-		MimeMessage mimeMessage = emailSender.createMimeMessage();
-		try {
-
-		MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, true);
-
-		mimeMessageHelper.setSubject("Bienvenue a notre Portal Medical ");
-		mimeMessageHelper.setFrom("contact@dsms.world");
-		mimeMessageHelper.setTo(rdv.getPatientEmail());
-		String content = "Bonjour ( Mme/M), "+ 
-		"\n"
-		+ "<br> desolé votre demande de rendez vous est annulée pour: \n" 
-		
-		+ " <br><br> date:"+rdv.getDateOfApt().toLocaleString()
-		+ " <br><br> avec docteur : "+rdv.getUser().getNom() +" " +rdv.getUser().getPrenom()
-		+"<br><br> vous devez nous recontacter , merci pour votre compréhension"
-		+ " <br><br> Cordialement,";
-
-		mimeMessageHelper.setText(content);
-		mimeMessageHelper.setText("<html><body><p>" + content
-		+ "</p> <img width=\"50\" alt=\"Apen\"></body></html>",
-		true);
-		emailSender.send(mimeMessageHelper.getMimeMessage());
-		} catch (MessagingException e) {
-		e.printStackTrace();
-		}
-
-		}
 
 }

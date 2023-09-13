@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   }
   openDialog() {
     let dialogRef= this.dialog.open(PasswordComponent, {
-      height: '40%',
+      height: '50%',
       width: '40%'
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
     if (this.token.getUserRole() == 'Medecin') {
       this.router.navigateByUrl('/pageadmin');
     }
-    else { this.router.navigateByUrl('/'); }
+    else { this.router.navigateByUrl('/dashboard/calender'); }
 
   }
 
