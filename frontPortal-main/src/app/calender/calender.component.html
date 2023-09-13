@@ -1,26 +1,26 @@
 <div class="mt-3 my-ng-fullcalendar">
-  <full-calendar class="test" [options]="calendarOptions" ></full-calendar>
+  <full-calendar class="test" #calendar [options]="calendarOptions" ></full-calendar>
 </div>
 <p-dialog [header]="headerText" [(visible)]="displayModal" [modal]="true" [style]="{width: '70vw'}" [baseZIndex]="10000"
           [draggable]="false" [resizable]="false">
   <label id="example-radio-group-label" class="m-2">Choisir le type de tache</label>
-  <mat-radio-group
+ <mat-radio-group
     aria-labelledby="example-radio-group-label"
     class="example-radio-group "
-    [(ngModel)]="typeTache">
+    [(ngModel)]="typeJournalisationT">
     <mat-radio-button class="example-radio-button m-2" *ngFor="let type of taskTypes" [value]="type">
       {{type}}
     </mat-radio-button>
   </mat-radio-group>
   <hr>
-  <form [formGroup]="ajoutTacheFormGroup">
+  <form [formGroup]="ajoutJournalisationTFormGroup">
     <div class="card-body">
-        <div class="row" *ngIf="typeTache=='Projet'">
+        <div class="row" *ngIf="typeJournalisationT=='Projet'">
           <div class="form-group col">
             <label class="form-label">Projet</label>
             <select class="form-control" formControlName="projet" >
               <option selected="selected">-- Choisir un projet --</option>
-              <option *ngFor="let project of projets" [value]="project.idA"> {{project.nomA}} </option>
+              <option *ngFor="let tache of taches" [value]="tache.idT"> {{tache.nomT}} </option>
             </select>
           </div>
         </div>
@@ -74,7 +74,7 @@
   </form>
   <div class="modal-footer">
     <button class="btn btn-danger" (click)="displayModal=false">Annuler</button>
-    <button class="btn btn-success m-2 " *ngIf="!modeEdit" (click)="displayModal=false; ajoutTache()" >Ajouter</button>
+    <button class="btn btn-success m-2 " *ngIf="!modeEdit" (click)="displayModal=false; ajoutJournalisationT()" >Ajouter</button>
     <button class="btn btn-success m-2 "  *ngIf="modeEdit" (click)="displayModal=false; modifier()" >Modifier</button>
   </div>
 

@@ -2,6 +2,7 @@
 @import '~@fullcalendar/daygrid/main.css';
 .my-ng-fullcalendar{
   width:100%;
+  margin-right: 100px;
 }
 :host ::ng-deep .p-button {
   margin: 0 .5rem 0 0;

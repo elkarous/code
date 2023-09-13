@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 
 @Entity
@@ -16,7 +17,9 @@ public class JournalisationT {
     @GeneratedValue(strategy  = GenerationType.IDENTITY)
     private Long idJT ;
     private  int nbheure ;
-
+    private Date dateDebut ;
+    private Date dateFin  ;
+    private String description;
     @JsonBackReference(value="tache")
    @ManyToOne
     private Tache  tache;

@@ -55,6 +55,9 @@ import { AddTeamComponent } from './list-team/add-team/add-team.component';
 import { ListClientComponent } from './list-client/list-client.component';
 import { AddClientComponent } from './list-client/add-client/add-client.component';
 import { UpdateClientComponent } from './list-client/update-client/update-client.component';
+import { ListTacheComponent } from './list-tache/list-tache.component';
+import { AddTacheComponent } from './list-tache/add-tache/add-tache.component';
+import { UpdateTacheComponent } from './list-tache/update-tache/update-tache.component';
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -85,7 +88,10 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     AddTeamComponent,
     ListClientComponent,
     AddClientComponent,
-    UpdateClientComponent
+    UpdateClientComponent,
+    ListTacheComponent,
+    AddTacheComponent,
+    UpdateTacheComponent
   ],
   imports: [
     BrowserModule,

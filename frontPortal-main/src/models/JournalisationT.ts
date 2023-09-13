@@ -6,4 +6,7 @@ export class JournalisationT {
   nbheure: number;
   tache: Tache;
   personne: UserEntity;
+  dateDebut: Date;
+  dateFin: Date;
+  description: string;
 }

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {CalendarOptions} from "@fullcalendar/angular";
-import {RendezVousService} from "../services/rendez-vous.service";
+
 import {formatDate} from "@angular/common";
 import {AccountService} from "../services/account.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -10,8 +10,12 @@ import {PatientService} from "../services/patient.service";
 import {Activite} from "../../models/Activite";
 import {Tache} from "../../models/Tache";
 import {ProjectService} from "../services/project.service";
-
-
+import { Calendar } from '@fullcalendar/core'; // Import the core FullCalendar library
+import timeGridPlugin from '@fullcalendar/timegrid';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import {JournalisationService} from "../services/journalisation.service";
+import {JournalisationT} from "../../models/JournalisationT";
+import {TacheService} from "../services/tache.service"; // a plugin!
 @Component({
   selector: 'app-calender',
   templateUrl: './calender.component.html',
@@ -21,7 +25,7 @@ export class CalenderComponent implements OnInit {
 
   Events = [];
   displayModal = false;
-  RendezvousS: Tache[] = [];
+  RendezvousS: JournalisationT[] = [];
   calendarOptions: CalendarOptions;
   rdvId: number;
   medecinId: number
@@ -29,23 +33,25 @@ export class CalenderComponent implements OnInit {
   patient: string;
   date: Date;
   debut: Date;
-  tache = new Tache();
-  ajoutTacheFormGroup: FormGroup;
+  journalisationT = new JournalisationT();
+  ajoutJournalisationTFormGroup: FormGroup;
   modifierRDVform: FormGroup;
-  projets: Activite[] = [];
+  taches: Tache[] = [];
   heures = ['08:30', '09:00', '09:30', '10:00', '10:30', '11:00', '11:30', '12:00', '14:00', '14:30', '15:00', '15:30', '16:00', '16:30', '17:00'];
   dateStart: Date;
   dateEnd: Date;
   heurStart = '';
   heurEnd = '';
   id: number;
-  typeTache = 'Projet';
+  typeJournalisationT = 'Projet';
   taskTypes = ['Projet', 'Normale']
   headerText = '';
+  @ViewChild('calendar') calendarComponent: any;
+   calendar: Calendar;
 
-  constructor(private rdvService: RendezVousService,
+  constructor(private journalisationService: JournalisationService,
               private userService: AccountService,
-              private projectService: ProjectService,
+              private tacheService: TacheService,
               private fb: FormBuilder,
               private toastr: ToastrService,
               private patientService: PatientService) {
@@ -54,12 +60,17 @@ export class CalenderComponent implements OnInit {
   ngAfterViewInit() {
     this.Events = []
     this.getAllRdv();
+    // Initialize FullCalendar with plugins
+     this.calendar = new Calendar(document.getElementById('calendar'), {
+      // or 'timeGridDay', 'timeGridThreeDay', etc.
+      // other configuration options
+    });
 
     this.calendarOptions = {
       headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'today dayGridMonth,dayGridWeek',
+        right: 'today dayGridMonth,timeGridWeek',
 
       },
       themeSystem: 'bootstrap',
@@ -72,18 +83,20 @@ export class CalenderComponent implements OnInit {
       },
       locale: 'fr',
       selectable: true,
-      initialView: 'dayGridMonth',
+      plugins: [dayGridPlugin, timeGridPlugin],
+      initialView: 'timeGridWeek',
       dateClick: this.onDateClick.bind(this),
       eventClick: this.onEventClick.bind(this),
-      eventColor: '#0c4d64',
       height: 600,
-      eventBorderColor: '#5bc0de',
       editable: true
     };
+    // @ts-ignore
+    this.calendar.setOption(this.calendarOptions);
+    this.calendar.render();
   }
 
   ngOnInit(): void {
-    this.ajoutTacheFormGroup = this.fb.group({
+    this.ajoutJournalisationTFormGroup = this.fb.group({
       projet: ['', Validators.required],
       dateDebut: ['', Validators.required],
       dateFin: ['', Validators.required],
@@ -106,7 +119,7 @@ export class CalenderComponent implements OnInit {
       headerToolbar: {
         left: 'prev,next',
         center: 'title',
-        right: 'today dayGridMonth,dayGridWeek',
+        right: 'today dayGridMonth,timeGridWeek,timeGridDay',
 
       },
       themeSystem: 'bootstrap',
@@ -119,18 +132,20 @@ export class CalenderComponent implements OnInit {
       },
       locale: 'fr',
       selectable: true,
-      initialView: 'dayGridMonth',
+      plugins: [timeGridPlugin],
+      initialView: 'timeGridWeek',
       dateClick: this.onDateClick.bind(this),
       eventClick: this.onEventClick.bind(this),
-      eventColor: '#bf0b0b',
-      eventBorderColor: '#1abc9c',
       editable: true
     };
+    // @ts-ignore
+    this.calendar.setOption(this.calendarOptions);
+    this.calendar.render();
   }
 
   onDateClick(res) {
     this.modeEdit = false;
-    this.headerText = 'Ajouter tache'
+    this.headerText = 'Ajouter journalisation'
     this.displayModal = true;
     this.dateStart = res.date;
     this.dateEnd = res.date;
@@ -138,20 +153,20 @@ export class CalenderComponent implements OnInit {
 
   onEventClick(info) {
     this.modeEdit = true;
-    this.headerText = 'Modifier tache'
-    this.rdvService.getbyid(info.event.id).subscribe(data => {
-      this.tache = data;
+    this.headerText = 'Modifier journalisation'
+    this.journalisationService.getbyid(info.event.id).subscribe(data => {
+      this.journalisationT = data;
       this.heurEnd = this.getTime(new Date(data.dateFin));
       this.heurStart = this.getTime(new Date(data.dateDebut));
-      this.ajoutTacheFormGroup.patchValue(data);
+      this.ajoutJournalisationTFormGroup.patchValue(data);
       this.dateStart =new  Date(data.dateDebut);
       this.dateEnd = new Date(data.dateFin);
-      this.ajoutTacheFormGroup.get('projet').setValue(data?.projet?.idA)
+
       this.displayModal = true;
     })
   }
   eventColor(event): string {
-    return event === 'new'?'#0c4d64':'red'
+    return event === 'new'?'#0c4d64':'blue'
   }
   private getTime(date: Date): string {
     const currentHour = date.getHours();
@@ -163,7 +178,7 @@ export class CalenderComponent implements OnInit {
   }
 
   getAllRdv() {
-    this.rdvService.getrdvByState().subscribe(data => {
+    this.journalisationService.getAll().subscribe(data => {
       this.RendezvousS = data;
       this.calendarOptions.events = [];
       for (let rdv of this.RendezvousS) {
@@ -171,11 +186,10 @@ export class CalenderComponent implements OnInit {
         let dayFin = formatDate(rdv.dateFin, 'yyyy-MM-dd HH:mm:ss', 'en_Us');
         let start = formatDate(rdv.dateDebut, 'HH:mm', 'en_Fr');
         let event = {
-          id: rdv.idT,
-          title: rdv.nomT,
+          id: rdv.idJT,
+          title: rdv.description,
           start: daystart.toString(),
           end: dayFin.toString(),
-          color: this.eventColor(rdv.nomT),
           extendedProps: {
             user: 1,
             date: start.toString()
@@ -189,57 +203,53 @@ export class CalenderComponent implements OnInit {
   }
 
   modifier() {
-    this.ajoutTacheFormGroup.get('dateDebut').value;
+    this.ajoutJournalisationTFormGroup.get('dateDebut').value;
     let formattedDtStart = formatDate(this.dateStart, 'yyyy-MM-dd', 'en_FR');
     let formattedDtEnd = formatDate(this.dateEnd, 'yyyy-MM-dd', 'en_FR');
     let hr = new Date(formattedDtStart + 'T' + this.heurStart + ':00');
     let hrEnd = new Date(formattedDtEnd + 'T' + this.heurEnd + ':00');
-    let tache = new Tache();
-    const project = this.projets.find(p => p.idA === Number(this.ajoutTacheFormGroup.get('projet').value))
-    tache.projet = project;
-    tache.nomT = this.ajoutTacheFormGroup.get('nomT').value;
-    tache.disc = this.ajoutTacheFormGroup.get('disc').value;
-    tache.etat = this.ajoutTacheFormGroup.get('etat').value;
-    tache.dateDebut = hr;
-    tache.dateFin = hrEnd;
-    this.rdvService.updateTache(tache,this.tache.idT).subscribe(() => {
+    let journalisationT = new JournalisationT();
+    const project = this.taches.find(p => p.idT === Number(this.ajoutJournalisationTFormGroup.get('projet').value))
+    journalisationT.tache = project;
+    journalisationT.description = this.ajoutJournalisationTFormGroup.get('disc').value;
+    journalisationT.dateDebut = hr;
+    journalisationT.dateFin = hrEnd;
+    this.journalisationService.updateJournalisationT(journalisationT,this.journalisationT.idJT).subscribe(() => {
         this.toastr.success('ajout avec succes')
         this.ngAfterViewInit();
-        this.ajoutTacheFormGroup.reset()
+        this.ajoutJournalisationTFormGroup.reset()
       },
       () => this.toastr.error('rendez-vous deja pris'))
 
-      this.ajoutTacheFormGroup.reset()
+      this.ajoutJournalisationTFormGroup.reset()
 
   }
 
 
   getAllProject() {
-    this.projectService.getAll().subscribe(data => {
-      this.projets = data;
+    this.tacheService.getAll().subscribe(data => {
+      this.taches = data;
     });
   }
 
-  ajoutTache() {
+  ajoutJournalisationT() {
     let formattedDtStart = formatDate(this.dateStart, 'yyyy-MM-dd', 'en_FR');
     let formattedDtEnd = formatDate(this.dateEnd, 'yyyy-MM-dd', 'en_FR');
     let hr = new Date(formattedDtStart + 'T' + this.heurStart + ':00');
     let hrEnd = new Date(formattedDtEnd + 'T' + this.heurEnd + ':00');
-    let tache = new Tache();
-    const project = this.projets.find(p => p.idA === Number(this.ajoutTacheFormGroup.get('projet').value))
-    tache.projet = project;
-    tache.nomT = this.ajoutTacheFormGroup.get('nomT').value;
-    tache.disc = this.ajoutTacheFormGroup.get('disc').value;
-    tache.etat = this.ajoutTacheFormGroup.get('etat').value;
-    tache.dateDebut = hr;
-    tache.dateFin = hrEnd;
-    this.rdvService.ajouterTache(tache).subscribe(() => {
+    let journalisationT = new JournalisationT();
+    const project = this.taches.find(p => p.idT === Number(this.ajoutJournalisationTFormGroup.get('projet').value))
+    journalisationT.tache = project;
+    journalisationT.description = this.ajoutJournalisationTFormGroup.get('disc').value;
+    journalisationT.dateDebut = hr;
+    journalisationT.dateFin = hrEnd;
+    this.journalisationService.ajouterJournalisationT(journalisationT).subscribe(() => {
         this.toastr.success('ajout avec succes')
         this.ngAfterViewInit();
-        this.ajoutTacheFormGroup.reset()
+        this.ajoutJournalisationTFormGroup.reset()
       },
       () => this.toastr.error('rendez-vous deja pris'))
-    this.ajoutTacheFormGroup.reset();
+    this.ajoutJournalisationTFormGroup.reset();
   }
 
 

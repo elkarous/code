@@ -12,6 +12,7 @@ import {ListClientComponent} from './list-client/list-client.component';
 import {ListProjectComponent} from './list-project/list-project.component';
 import {ListTeamComponent} from './list-team/list-team.component';
 import {AuthGuard} from "./Authentification/guards/auth.guard";
+import {ListTacheComponent} from "./list-tache/list-tache.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -25,6 +26,7 @@ const routes: Routes = [
       {path: 'project', component: ListProjectComponent},
       {path: 'team', component: ListTeamComponent},
       {path: 'employee', component: ListEmployeeComponent},
+      {path: 'tache', component: ListTacheComponent},
       {path: 'statistiques', component: StatistiquesComponent},
     ],canActivate:[AuthGuard]
   },
