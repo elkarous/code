@@ -6,6 +6,7 @@ import {AccountService} from 'src/app/services/account.service';
 import {UserEntity} from 'src/models/userEntity';
 import {Role} from '../../../models/Role';
 import {TeamService} from "../../services/team.service";
+import {Equipe} from "../../../models/Equipe";
 
 @Component({
   selector: 'app-addemployee',
@@ -16,6 +17,7 @@ export class AddEmployeetComponent implements OnInit {
   email = new FormControl('', [Validators.required, Validators.email]);
   role = new FormControl('');
   user: UserEntity = new UserEntity();
+  users:UserEntity[] = []
   hide = true;
   teamList = [];
 
@@ -32,7 +34,6 @@ export class AddEmployeetComponent implements OnInit {
 
 
   addUser() {
-    this.user.role = Role.EMPLOYEE;
     this.accountService.addUserWithoutImage(this.user)
       .subscribe(res => {
           this.toast.success('Employé enregistré avec succès !', '', {
@@ -52,10 +53,42 @@ export class AddEmployeetComponent implements OnInit {
     this.teamService.getAll().subscribe((response)=>{
       this.teamList = response;
     })
+  }
 
+  roleChange() {
+    this.user.directeur = null;
+    this.user.equipe = null;
+    switch (this.user.role.toString()) {
+      case 'chef_equipe': {
+        this.accountService.getAllUsersByRole('chef_service').subscribe((response)=>{
+          this.users = response;
+        })
+        break;
+      }
+      case 'employee': {
+        break;
+      }
+      case 'chef_service': {
+        this.accountService.getAllUsersByRole('directeur_generale').subscribe((response)=>{
+          this.users = response;
+        })
+        break;
+      }
+      default: {
+        break
+      }
+    }
   }
   equipeCompare(equipe:any, result:any){
     return equipe.idE === result.idE;
+  }
+
+  equipeChange(value: Equipe) {
+    this.teamService.getChefEquipeByEquipeId(value.idE).subscribe(response => {
+      this.users = [];
+      this.users.push(response);
+      this.user.directeur = response;
+    })
   }
 }
 

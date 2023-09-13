@@ -68,5 +68,7 @@ export class AccountService {
   /*resetPassword(resetPassword:ResetPassword):Observable<string>{
       return this.http.post<string>(this.url+restPassword);
   }*/
-
+  getAllUsersByRole(role:string): Observable<UserEntity[]> {
+    return this.http.get<UserEntity[]>(this.url+'getbyRole/'+role);
+  }
 }

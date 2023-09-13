@@ -14,6 +14,7 @@ export class UserEntity{
    password:string;
    role :Role;
    creationDate : Date;
+  directeur:UserEntity;
    ville :string;
    codepostal:number;
    gouvernerat:Gouvernerats;

@@ -10,16 +10,18 @@ import javax.persistence.*;
 import java.util.Collection;
 
 
-    @Entity
-    @Data @AllArgsConstructor @NoArgsConstructor @ToString
+@Entity
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 
-    public class Site
-    {
-        @Id
-        @GeneratedValue(strategy= GenerationType.IDENTITY)
-        private  Long idS;
-        private String nomS ;
-       @JsonManagedReference(value="site")
-        @OneToMany(mappedBy = "site", fetch=FetchType.LAZY)
-        private Collection<Activite> activites ;
+public class Site {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idS;
+    private String nomS;
+    @JsonManagedReference(value = "site")
+    @OneToMany(mappedBy = "site", fetch = FetchType.LAZY)
+    private Collection<Activite> activites;
 }

@@ -11,6 +11,7 @@ import {DahsbordComponent} from './dahsbord/dahsbord.component';
 import {ListClientComponent} from './list-client/list-client.component';
 import {ListProjectComponent} from './list-project/list-project.component';
 import {ListTeamComponent} from './list-team/list-team.component';
+import {AuthGuard} from "./Authentification/guards/auth.guard";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,12 +20,13 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DahsbordComponent, children: [
       {path: 'calender', component: CalenderComponent},
+      {path: '', component: StatistiquesComponent},
       {path: 'client', component: ListClientComponent},
       {path: 'project', component: ListProjectComponent},
       {path: 'team', component: ListTeamComponent},
       {path: 'employee', component: ListEmployeeComponent},
       {path: 'statistiques', component: StatistiquesComponent},
-    ]
+    ],canActivate:[AuthGuard]
   },
 
 ];

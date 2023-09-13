@@ -12,20 +12,32 @@ import java.util.Collection;
 
 
 @Entity
-@Data @AllArgsConstructor
-@NoArgsConstructor @ToString
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 
 
 @DiscriminatorValue("projet")
 
-public class Projet extends Activite  {
+public class Projet extends Activite {
 
     @JsonBackReference(value = "chef")
     @ManyToOne
-
     private UserEntity chef;
-  @JsonManagedReference(  value = "taches")
-    @OneToMany(  mappedBy = "projet" ,fetch= FetchType.LAZY)
-    private Collection<Tache> taches ;
+    @JsonManagedReference(value = "taches")
+    @OneToMany(mappedBy = "projet", fetch = FetchType.LAZY)
+    private Collection<Tache> taches;
 
+    @Override
+    public String toString() {
+        return "Projet{" +
+                "idA=" + idA +
+                ", nomA='" + nomA + '\'' +
+                ", dateDebut=" + dateDebut +
+                ", dateFin=" + dateFin +
+                ", etat='" + etat + '\'' +
+                ", disc='" + disc + '\'' +
+                '}';
+    }
 }

@@ -1,1 +1,16 @@
-<p>add-client works!</p>
+<div class="card-header">
+  <h2 mat-dialog-title > Ajouter un nouveau client </h2>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Nom</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="client.nomS" placeholder="Entrer le nom ">
+  </mat-form-field>
+
+
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button mat-button (click)="addTeam()" cdkFocusInitial mat-dialog-close>Ajouter</button>
+</mat-dialog-actions>

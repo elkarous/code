@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
     if (this.token.getUserRole() == 'Medecin') {
       this.router.navigateByUrl('/pageadmin');
     }
-    else { this.router.navigateByUrl('/dashboard/calender'); }
+    else { this.router.navigateByUrl('/dashboard'); }
 
   }
 

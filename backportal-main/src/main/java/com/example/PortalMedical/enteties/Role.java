@@ -1,5 +1,5 @@
 package com.example.PortalMedical.enteties;
 
 public enum Role {
-    ADMIN,EMPLOYEE,TEAMlEADER,SERVICELEADER
+    directeur_generale,chef_service,chef_equipe,employee
 }

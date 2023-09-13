@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import {Equipe} from "../../../models/Equipe";
+import {TeamService} from "../../services/team.service";
+import {ToastrService} from "ngx-toastr";
+import {Router} from "@angular/router";
+import {Site} from "../../../models/Site";
+import {ClientService} from "../../services/client.service";
 
 @Component({
   selector: 'app-add-client',
@@ -6,10 +12,31 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-client.component.css']
 })
 export class AddClientComponent implements OnInit {
-
-  constructor() { }
+  client: Site = new Site();
+  constructor(private clientService: ClientService,
+              private toast: ToastrService,
+              private route: Router
+  ) {
+  }
 
   ngOnInit(): void {
   }
 
+
+  addTeam() {
+    this.clientService.ajoutClient(this.client)
+      .subscribe(res => {
+          this.toast.success('Equipe enregistré avec succès !', '', {
+            timeOut: 3000,
+            positionClass: 'toast-bottom-right'
+          });
+        },
+        error => {
+          this.toast.error(error.error.message, 'quelque chose est mal passé !!', {
+            timeOut: 3000,
+            positionClass: 'toast-bottom-right'
+          });
+        });
+
+  }
 }

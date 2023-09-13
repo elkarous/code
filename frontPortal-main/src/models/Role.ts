@@ -1,3 +1,3 @@
 export enum Role {
-  ADMIN, EMPLOYEE, TEAMlEADER, SERVICELEADER
+  directeur_generale,chef_service,chef_equipe,employee
 }

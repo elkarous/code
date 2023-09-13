@@ -1,9 +1,9 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ToastrService } from 'ngx-toastr';
-import { AccountService } from 'src/app/services/account.service';
-import { UserEntity } from 'src/models/userEntity';
+import {Component, Inject, OnInit} from '@angular/core';
+import {FormControl, Validators} from '@angular/forms';
+import {MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {ToastrService} from 'ngx-toastr';
+import {AccountService} from 'src/app/services/account.service';
+import {UserEntity} from 'src/models/userEntity';
 import {TeamService} from "../../services/team.service";
 import {Equipe} from "../../../models/Equipe";
 
@@ -15,15 +15,20 @@ import {Equipe} from "../../../models/Equipe";
 export class UpdateEmployeeComponent implements OnInit {
 
   teamList = [];
+  users: UserEntity[] = []
   email = new FormControl('', [Validators.required, Validators.email]);
-  close=false;
+  close = false;
   message: File;
-  password=new FormControl(null, [Validators.required, Validators.minLength(8)])
+  password = new FormControl(null, [Validators.required, Validators.minLength(8)])
 
-  constructor(private accountService:AccountService,
-              private toast:ToastrService,
-              private teamService:TeamService,
-              @Inject(MAT_DIALOG_DATA) public user: UserEntity) {}
+  constructor(private accountService: AccountService,
+              private toast: ToastrService,
+              private teamService: TeamService,
+              @Inject(MAT_DIALOG_DATA) public user: UserEntity) {
+    this.accountService.getAllUsersByRole('chef_service').subscribe((response)=>{
+      this.users = response;
+    })
+  }
 
 
   ngOnInit(): void {
@@ -31,24 +36,29 @@ export class UpdateEmployeeComponent implements OnInit {
   }
 
   updateUser() {
-      this.accountService.updateUserWithoutImage(this.user).subscribe(res => {
-          this.toast.success('Mise à jour des données réussie ', 'Mise à jour', {
-            timeOut: 3000,
-            positionClass: 'toast-bottom-right'
-          });
-          this.close=true;
-        }
-
-      )
+    this.accountService.updateUserWithoutImage(this.user).subscribe(res => {
+        this.toast.success('Mise à jour des données réussie ', 'Mise à jour', {
+          timeOut: 3000,
+          positionClass: 'toast-bottom-right'
+        });
+        this.close = true;
+      }
+    )
 
   }
-  getAllTeam(){
-    this.teamService.getAll().subscribe((response)=>{
+
+  getAllTeam() {
+    this.teamService.getAll().subscribe((response) => {
       this.teamList = response;
     })
 
   }
-  equipeCompare(equipe:any, result:any){
+
+  equipeCompare(equipe: any, result: any) {
     return equipe.idE === result.idE;
+  }
+
+  userCompare(user: UserEntity, u: UserEntity) {
+    return u.id === user.id;
   }
 }

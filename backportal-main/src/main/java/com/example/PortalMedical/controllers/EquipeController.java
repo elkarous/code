@@ -3,6 +3,7 @@ package com.example.PortalMedical.controllers;
 
 import com.example.PortalMedical.Services.EquipeService;
 import com.example.PortalMedical.enteties.Equipe;
+import com.example.PortalMedical.enteties.UserEntity;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -63,6 +64,11 @@ public class EquipeController {
         equipeService.deleteEquipe(equipeId);
         return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
     }
-
+    @GetMapping("/getChefEquipeByEquipeId/{id}")
+    @PostAuthorize("  hasAuthority('chef_service') or hasAuthority('directeur_generale')")
+    public ResponseEntity<UserEntity> getChefEquipeByEquipeId(@PathVariable("id") Long equipeId){
+        UserEntity UserEntity = equipeService.getChefEquipeByEquipeId(equipeId);
+        return new ResponseEntity<>(UserEntity, HttpStatus.OK);
+    }
 }
 

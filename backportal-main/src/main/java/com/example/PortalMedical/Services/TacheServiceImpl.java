@@ -1,8 +1,11 @@
 package com.example.PortalMedical.Services;
 
+import com.example.PortalMedical.DTO.TacheDto;
 import com.example.PortalMedical.Repositories.TacheRepository;
+import com.example.PortalMedical.enteties.Projet;
 import com.example.PortalMedical.enteties.Tache;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +21,17 @@ public class TacheServiceImpl  implements TacheService{
     }
 
     @Override
-    public Tache getTacheById(Long tacheId) {
+    public TacheDto getTacheById(Long tacheId) {
         Optional<Tache> optionalTache = tacheRepository.findById(tacheId);
-        return optionalTache.get();
+        if(optionalTache.isPresent()){
+            Tache tache =optionalTache.get();
+            ModelMapper modelMapper = new ModelMapper();
+            TacheDto tacheDto = modelMapper.map(tache, TacheDto.class);
+            Projet projet = tacheRepository.getProgectByTask(tacheId);
+            tacheDto.setProjet(projet);
+            return tacheDto;
+        }
+        return  null;
     }
 
     @Override

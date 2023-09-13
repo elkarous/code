@@ -1,9 +1,12 @@
 package com.example.PortalMedical.controllers;
 
+import com.example.PortalMedical.DTO.TacheDto;
+import com.example.PortalMedical.DTO.UserDTO;
 import com.example.PortalMedical.Services.TacheService;
 import com.example.PortalMedical.enteties.Tache;
 
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +27,8 @@ public class TacheController  {
 
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<Tache> getTacheById(@PathVariable("id") Long tacheId){
-        Tache tache = tacheService.getTacheById(tacheId);
+    public ResponseEntity<TacheDto> getTacheById(@PathVariable("id") Long tacheId){
+        TacheDto tache = tacheService.getTacheById(tacheId);
         return new ResponseEntity<>(tache, HttpStatus.OK);
     }
 

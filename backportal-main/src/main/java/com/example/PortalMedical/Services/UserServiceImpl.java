@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             ModelMapper modelMapper = new ModelMapper();
             UserEntity user = modelMapper.map(UserDTO, UserEntity.class);
             user.setCreationDate(new java.util.Date());
-            user.setRole(Role.EMPLOYEE);
+            user.setRole(Role.employee);
             userRepository.save(user);
         }
         return UserDTO;
@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
         List<UserEntity> users = userRepository.findAll();
         List<UserDTO> usersDto = new ArrayList<>();
         for (UserEntity userEntity : users) {
-if(userEntity.getRole().equals(Role.EMPLOYEE)) {
-	
+if(!userEntity.getRole().equals(Role.directeur_generale)) {
+
 
             ModelMapper modelMapper = new ModelMapper();
             UserDTO user = modelMapper.map(userEntity, UserDTO.class);

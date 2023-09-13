@@ -3,6 +3,7 @@ package com.example.PortalMedical.Services;
 
 import com.example.PortalMedical.Repositories.EquipeRepository;
 import com.example.PortalMedical.enteties.Equipe;
+import com.example.PortalMedical.enteties.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,15 @@ public class EquipeServiceImpl  implements EquipeService{
    public  Equipe getEquipeBynomE(String nomE){
         Optional<Equipe> optionalEquipe = equipeRepository.findBynomE(nomE);
         return optionalEquipe.get();
+
+    }
+
+    @Override
+    public  UserEntity getChefEquipeByEquipeId(long id){
+        List<UserEntity> userEntities = equipeRepository.getChefEquipeByEquipeId(id);
+       if(userEntities.isEmpty()){
+           return null;
+       }else return userEntities.get(0);
 
     }
 }

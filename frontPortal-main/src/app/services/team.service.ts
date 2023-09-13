@@ -4,6 +4,7 @@ import {Patient} from "../../models/Patient";
 import {Observable} from "rxjs";
 import {Activite} from "../../models/Activite";
 import {Equipe} from "../../models/Equipe";
+import {UserEntity} from "../../models/userEntity";
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class TeamService {
   }
   deleteTeam(id: number) :Observable<any>{
     return this.http.delete<Observable<any>>(this.url + 'delete/'+ id);
+  }
+
+  getChefEquipeByEquipeId(id:number):Observable<UserEntity>{
+    return this.http.get<UserEntity>(this.url+'getChefEquipeByEquipeId/'+ id)
   }
 }

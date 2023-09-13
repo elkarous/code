@@ -1,5 +1,7 @@
-package com.example.PortalMedical.enteties;
+package com.example.PortalMedical.DTO;
 
+import com.example.PortalMedical.enteties.JournalisationT;
+import com.example.PortalMedical.enteties.Projet;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -12,26 +14,17 @@ import java.util.Collection;
 import java.util.Date;
 
 
-@Entity
+
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
 
-public class Tache {
-    @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column( nullable = true)
+public class TacheDto {
     private Long idT;
     private String nomT;
     private Date dateDebut ;
     private Date dateFin  ;
     private String etat  ;
     private  String disc  ;
-    @JsonManagedReference(value="tache")
-    @OneToMany(mappedBy = "tache", fetch=FetchType.LAZY)
     private Collection<JournalisationT> journalisation  ;
-
-  @JsonBackReference(value = "taches")
-    @ManyToOne
-
     private Projet projet;
 
     @Override
