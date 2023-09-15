@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
-import {ListEmployeeComponent} from './gestion-des-patients/list-employee.component';
+import {ListEmployeeComponent} from './list-employee/list-employee.component';
 import {HomeComponent} from './home/home.component';
 import {PageAdminComponent} from './page-admin/page-admin.component';
 import {StatistiquesComponent} from './statistiques/statistiques.component';
@@ -13,6 +13,7 @@ import {ListProjectComponent} from './list-project/list-project.component';
 import {ListTeamComponent} from './list-team/list-team.component';
 import {AuthGuard} from "./Authentification/guards/auth.guard";
 import {ListTacheComponent} from "./list-tache/list-tache.component";
+import {ReportingComponent} from "./reporting/reporting.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -21,6 +22,7 @@ const routes: Routes = [
   {
     path: 'dashboard', component: DahsbordComponent, children: [
       {path: 'calender', component: CalenderComponent},
+      {path: 'reporting/:id', component: ReportingComponent},
       {path: '', component: StatistiquesComponent},
       {path: 'client', component: ListClientComponent},
       {path: 'project', component: ListProjectComponent},

@@ -84,11 +84,10 @@ export class AddEmployeetComponent implements OnInit {
   }
 
   equipeChange(value: Equipe) {
-    this.teamService.getChefEquipeByEquipeId(value.idE).subscribe(response => {
-      this.users = [];
-      this.users.push(response);
-      this.user.directeur = response;
-    })
+      if(this.user.role.toString() =='employee') {
+        this.users.push(value.chef);
+        this.user.directeur = value.chef;
+      }
   }
 }
 

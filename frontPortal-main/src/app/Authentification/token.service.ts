@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {UserEntity} from "../../models/userEntity";
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class TokenService {
 
   getToken() {
     return localStorage.getItem('token');
+  }
+
+  getUser():UserEntity {
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   getId() {

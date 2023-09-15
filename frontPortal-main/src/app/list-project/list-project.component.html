@@ -2,12 +2,12 @@
 
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-      <h1 class="breadcrumb-item active mt-2" aria-current="page">Liste des projets</h1>
+      <h1 class="breadcrumb-item active mt-2" aria-current="page">Liste des activités</h1>
     </ol>
   </nav>
   <mat-form-field appearance="standard">
-    <mat-label>Rechercher projets </mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher projets" #input>
+    <mat-label>Rechercher activité </mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Rechercher activité" #input>
   </mat-form-field>
 
   <div class="mat-elevation-z8">
@@ -18,7 +18,7 @@
 
 
       <ng-container matColumnDef="nomA">
-        <th mat-header-cell  id="nomA" *matHeaderCellDef mat-sort-header>Nom de projet</th>
+        <th mat-header-cell  id="nomA" *matHeaderCellDef mat-sort-header>Nom d'activité</th>
         <td mat-cell *matCellDef="let element"> {{element.nomA}} </td>
       </ng-container>
 
@@ -47,13 +47,22 @@
         <td mat-cell *matCellDef="let element"> {{element.disc}} </td>
       </ng-container>
 
+
+      <ng-container matColumnDef="nbrTache">
+        <th mat-header-cell id="nbrTache" *matHeaderCellDef mat-sort-header>Nombre de taches</th>
+        <td mat-cell *matCellDef="let element"> {{getNombreDeTache(element)}} </td>
+      </ng-container>
+      <ng-container matColumnDef="typeND">
+        <th mat-header-cell id="typeND" *matHeaderCellDef mat-sort-header>Type d'activité non dev</th>
+        <td mat-cell *matCellDef="let element"> {{element.typeND}} </td>
+      </ng-container>
       <ng-container matColumnDef="Actions">
         <th mat-header-cell id="Action" *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let row">
-          <button mat-icon-button    matTooltip="Edit user"   matTooltipPosition="left" (click)="onEdit(row)">
+          <button mat-icon-button    matTooltip="Edit activité"   matTooltipPosition="left" (click)="onEdit(row)">
             <mat-icon>update</mat-icon></button>
-          <button mat-icon-button color="warn"    matTooltip="delete user" matTooltipPosition="right"
-                  (click)="deleteUser(row.id)"><mat-icon>delete_outline</mat-icon></button>
+          <button mat-icon-button color="warn"    matTooltip="delete activité" matTooltipPosition="right"
+                  (click)="delete(row.idA)"><mat-icon>delete_outline</mat-icon></button>
 
         </td>
       </ng-container>
@@ -69,8 +78,8 @@
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
   <div class="mt-2 d-flex flex-column ">
-    <button mat-raised-button  color="warn"   class="align-self-end "  matTooltip="addUser" matTooltipPosition="right"
-            (click)="add()" > Ajouter Employé
+    <button mat-raised-button  color="warn"   class="align-self-end "  matTooltip="Ajouter activité" matTooltipPosition="right"
+            (click)="add()" > Ajouter activité
     </button>
   </div>
 </div>

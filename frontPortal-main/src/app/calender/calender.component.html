@@ -6,60 +6,46 @@
   <label id="example-radio-group-label" class="m-2">Choisir le type de tache</label>
  <mat-radio-group
     aria-labelledby="example-radio-group-label"
-    class="example-radio-group "
+    class="example-radio-group " [disabled]="modeEdit"
     [(ngModel)]="typeJournalisationT">
     <mat-radio-button class="example-radio-button m-2" *ngFor="let type of taskTypes" [value]="type">
       {{type}}
     </mat-radio-button>
   </mat-radio-group>
   <hr>
-  <form [formGroup]="ajoutJournalisationTFormGroup">
+  <form [formGroup]="formGroup">
     <div class="card-body">
-        <div class="row" *ngIf="typeJournalisationT=='Projet'">
+        <div class="row m-2" *ngIf="typeJournalisationT=='Tache'">
           <div class="form-group col">
-            <label class="form-label">Projet</label>
-            <select class="form-control" formControlName="projet" >
-              <option selected="selected">-- Choisir un projet --</option>
+            <label class="form-label">Tache</label>
+            <select class="form-control" formControlName="tache" >
+              <option selected="selected">-- Choisir une tache --</option>
               <option *ngFor="let tache of taches" [value]="tache.idT"> {{tache.nomT}} </option>
             </select>
           </div>
         </div>
-
-      <div class="row">
-        <div class="form-group col-lg-6">
-          <label class="form-label">Nom</label>
-          <input class="form-control" type="text" formControlName="nomT">
-        </div>
-        <div class="form-group col-lg-6">
-          <label class="form-label">Etat</label>
-          <select class="form-control" formControlName="etat" >
-            <option value="En cour">En cour</option>
-            <option value="Terminé">Terminé</option>
+      <div class="row m-2" *ngIf="typeJournalisationT!='Tache'">
+        <div class="form-group col">
+          <label class="form-label">Activité</label>
+          <select class="form-control" formControlName="activiteND" >
+            <option selected="selected">-- Choisir une activité --</option>
+            <option *ngFor="let activite of activites" [value]="activite.idA"> {{activite.nomA}} </option>
           </select>
         </div>
-        </div>
-    <div class="row">
-      <div class="form-group col-lg-12">
+      </div>
+    <div class="row m-2">
+      <div class="form-group col-lg-12" >
         <label class="form-label">Discription</label>
-        <textarea class="form-control" type="text" formControlName="disc"></textarea>
+        <textarea class="form-control" type="text" formControlName="description"></textarea>
       </div>
     </div>
-      <div class="row">
-        <div class="form-group col-lg-6">
-          <label class="form-label">Date debut</label>
-          <input type="date" class="form-control" (blur)="dateStartBlur($event)" placeholder="yyyy-MM-dd" formControlName="dateDebut" [ngModel]="dateStart | date:'yyyy-MM-dd'">
-        </div>
+      <div class="row m-2">
         <div class="form-group col-lg-6">
           <label class="form-label">Heure de debut</label>
           <select class="form-control" formControlName="heurStart" [(ngModel)]="heurStart">
             <option selected="selected">choisir une heure</option>
             <option *ngFor="let h of heures" [value]="h">{{h}}</option>
           </select>
-        </div>
-        <div class="form-group col-lg-6">
-          <label class="form-label">Date fin</label>
-          <input type="date" class="form-control" placeholder="yyyy-MM-dd" (blur)="dateEndBlur($event)"
-                 formControlName="dateFin" [ngModel]="dateEnd | date:'yyyy-MM-dd'">
         </div>
         <div class="form-group col-lg-6">
           <label class="form-label">Heure de  fin</label>
@@ -73,8 +59,9 @@
     </div>
   </form>
   <div class="modal-footer">
+    <button class="btn btn-success m-2 "  *ngIf="modeEdit"  (click)="displayModal=false; supprimer()" >Supprimer</button>
     <button class="btn btn-danger" (click)="displayModal=false">Annuler</button>
-    <button class="btn btn-success m-2 " *ngIf="!modeEdit" (click)="displayModal=false; ajoutJournalisationT()" >Ajouter</button>
+    <button class="btn btn-success m-2 " *ngIf="!modeEdit" (click)="displayModal=false; ajouter()" >Ajouter</button>
     <button class="btn btn-success m-2 "  *ngIf="modeEdit" (click)="displayModal=false; modifier()" >Modifier</button>
   </div>
 

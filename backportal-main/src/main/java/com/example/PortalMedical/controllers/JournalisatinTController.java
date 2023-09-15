@@ -1,5 +1,8 @@
 package com.example.PortalMedical.controllers;
 
+import com.example.PortalMedical.DTO.Event;
+import com.example.PortalMedical.DTO.JournalisationTDto;
+import com.example.PortalMedical.DTO.ReportingDto;
 import com.example.PortalMedical.Services.JournalisationTService;
 import com.example.PortalMedical.enteties.JournalisationT;
 import lombok.AllArgsConstructor;
@@ -7,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,8 +27,8 @@ public class JournalisatinTController {
 
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<JournalisationT> getJournalisationTById(@PathVariable("id") Long journalisationTId){
-        JournalisationT journalisationT = journalisationTService.getJournalisationTById(journalisationTId);
+    public ResponseEntity<JournalisationTDto> getJournalisationTById(@PathVariable("id") Long journalisationTId){
+        JournalisationTDto journalisationT = journalisationTService.getJournalisationTById(journalisationTId);
         return new ResponseEntity<>(journalisationT, HttpStatus.OK);
     }
 
@@ -49,6 +53,23 @@ public class JournalisatinTController {
     public ResponseEntity<String> deleteJournalisationT(@PathVariable("id") Long journalisationTId){
        journalisationTService.deleteJournalisationT(journalisationTId);
         return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
+    }
+
+    @GetMapping("/getAllEvent")
+    public ResponseEntity<List<Event>> getAllEvent(){
+        List<Event> journalisationTs= journalisationTService.getAllEvent();
+        return new ResponseEntity<>(journalisationTs, HttpStatus.OK);
+    }
+
+    @GetMapping("/getNbreHeure/{id}/{date}")
+    public ResponseEntity<List<ReportingDto>> getNbreHeure(@PathVariable("id") Long id,@PathVariable("date") Date date){
+      List<ReportingDto> list =  journalisationTService.getNbreHeure(id,date);
+        return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    @GetMapping("/getNbreHeureTotal/{id}/{date}")
+    public ResponseEntity<Float> getNbreHeureTotal(@PathVariable("id") Long id,@PathVariable("date") Date date){
+        float nbr =  journalisationTService.getNbreHeureTotal(id,date);
+        return new ResponseEntity<>(nbr, HttpStatus.OK);
     }
 
 }

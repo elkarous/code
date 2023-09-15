@@ -24,12 +24,12 @@ import {PageAdminComponent} from './page-admin/page-admin.component';
 import {MatMenuModule} from '@angular/material/menu';
 
 
-import {ListEmployeeComponent} from './gestion-des-patients/list-employee.component';
+import {ListEmployeeComponent} from './list-employee/list-employee.component';
 import {StatistiquesComponent} from './statistiques/statistiques.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
-import {UpdateEmployeeComponent} from './gestion-des-patients/updateemployee/update-employee.component';
-import {AddEmployeetComponent} from './gestion-des-patients/addemployee/add-employeet.component';
+import {UpdateEmployeeComponent} from './list-employee/updateemployee/update-employee.component';
+import {AddEmployeetComponent} from './list-employee/addemployee/add-employeet.component';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatSelectModule} from '@angular/material/select';
@@ -41,7 +41,7 @@ import {FullCalendarModule} from '@fullcalendar/angular';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction';
 import {DialogModule} from 'primeng/dialog';
-import {ButtonModule} from 'primeng';
+import {ButtonModule, CalendarModule} from 'primeng';
 import {NavbarComponent} from './navbar/navbar.component';
 import { DahsbordComponent } from './dahsbord/dahsbord.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -58,6 +58,8 @@ import { UpdateClientComponent } from './list-client/update-client/update-client
 import { ListTacheComponent } from './list-tache/list-tache.component';
 import { AddTacheComponent } from './list-tache/add-tache/add-tache.component';
 import { UpdateTacheComponent } from './list-tache/update-tache/update-tache.component';
+import { ReportingComponent } from './reporting/reporting.component';
+
 
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
@@ -91,7 +93,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     UpdateClientComponent,
     ListTacheComponent,
     AddTacheComponent,
-    UpdateTacheComponent
+    UpdateTacheComponent,
+    ReportingComponent
   ],
   imports: [
     BrowserModule,
@@ -121,7 +124,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     DialogModule,
     ButtonModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    CalendarModule
   ],
   providers: [{provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: {appearance: 'fill'}},
     {

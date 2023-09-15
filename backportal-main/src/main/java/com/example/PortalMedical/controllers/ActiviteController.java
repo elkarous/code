@@ -1,6 +1,7 @@
 package com.example.PortalMedical.controllers;
 
 
+import com.example.PortalMedical.DTO.ActiviteDto;
 import com.example.PortalMedical.Services.ActiviteService;
 import com.example.PortalMedical.enteties.Activite;
 import lombok.AllArgsConstructor;
@@ -30,8 +31,8 @@ public class ActiviteController {
 
     @GetMapping("/getById/{id}")
 
-    public ResponseEntity<Activite > getActiviteById(@PathVariable("id") Long activiteId){
-        Activite  activite  = activiteService.getActiviteById(activiteId);
+    public ResponseEntity<ActiviteDto> getActiviteById(@PathVariable("id") Long activiteId){
+        ActiviteDto  activite  = activiteService.getActiviteById(activiteId);
         return new ResponseEntity<>(activite , HttpStatus.OK);
     }
 

@@ -94,7 +94,6 @@ export class HomeComponent implements OnInit {
 
   handleResponse(data: any) {
     this.token.handle(data);
-
     this.account.changeAuthStatus(true);
     this.toastr.success(
       `Bienvenue ` + this.token.getUserName(),
@@ -106,10 +105,10 @@ export class HomeComponent implements OnInit {
       },
 
     );
-    if (this.token.getUserRole() == 'Medecin') {
-      this.router.navigateByUrl('/pageadmin');
-    }
-    else { this.router.navigateByUrl('/dashboard'); }
+    this.account.getById(Number(this.token.getId())).subscribe((response)=>{
+      localStorage.setItem('user',JSON.stringify(response))
+    })
+ this.router.navigateByUrl('/dashboard');
 
   }
 

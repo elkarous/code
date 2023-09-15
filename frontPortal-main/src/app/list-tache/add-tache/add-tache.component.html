@@ -1,1 +1,47 @@
-<p>add-tache works!</p>
+<div class="card-header">
+  <h2 mat-dialog-title > Ajouter une nouvelle tache </h2>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Projet</mat-label>
+    <mat-select [(ngModel)]="tache.projet" [compareWith]="projectCompare" placeholder="projet" required>
+      <mat-option *ngFor="let project of projets" [value]="project"> {{project.nomA}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Nom de tache</mat-label>
+    <input matInput  [(ngModel)]="tache.nomT" placeholder="Entrer le nom ">
+  </mat-form-field>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Date de debut</mat-label>
+    <input matInput [(ngModel)]="tache.dateDebut" [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Date de fin</mat-label>
+    <input matInput [(ngModel)]="tache.dateFin" [matDatepicker]="picker1">
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1></mat-datepicker>
+  </mat-form-field>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Discription de tache</mat-label>
+    <input matInput  [(ngModel)]="tache.disc" placeholder="Discription de tache">
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Etat de tache</mat-label>
+    <mat-select [(ngModel)]="tache.etat">
+      <mat-option value="En cour">En cour</mat-option>
+      <mat-option value="Terminé">Terminé</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button mat-button (click)="ajoutTache()" cdkFocusInitial mat-dialog-close>Ajouter</button>
+</mat-dialog-actions>

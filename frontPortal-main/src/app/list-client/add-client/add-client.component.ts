@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {Equipe} from "../../../models/Equipe";
 import {TeamService} from "../../services/team.service";
 import {ToastrService} from "ngx-toastr";
 import {Router} from "@angular/router";
 import {Site} from "../../../models/Site";
 import {ClientService} from "../../services/client.service";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-add-client',
@@ -14,8 +15,7 @@ import {ClientService} from "../../services/client.service";
 export class AddClientComponent implements OnInit {
   client: Site = new Site();
   constructor(private clientService: ClientService,
-              private toast: ToastrService,
-              private route: Router
+              private toast: ToastrService
   ) {
   }
 

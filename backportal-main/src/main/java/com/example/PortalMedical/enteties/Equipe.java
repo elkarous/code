@@ -21,7 +21,8 @@ public class Equipe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idE;
     private String nomE;
-
+    @OneToOne
+    private UserEntity chef;
     @OneToMany(mappedBy = "equipe", fetch = FetchType.LAZY)
     private Collection<UserEntity> menbres;
     @JsonManagedReference(value = "equipe")

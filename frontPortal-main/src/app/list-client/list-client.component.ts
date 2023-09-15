@@ -26,10 +26,7 @@ export class ListClientComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   users: UserEntity[];
-  images: string[];
-  base64Data: Int8Array;
   retrievedImage: string;
-  lang: any;
 
   constructor(private accountService: AccountService,
               private clientService:ClientService,
@@ -66,16 +63,22 @@ export class ListClientComponent implements OnInit {
   }
 
   deleteTeam(id: number) {
-    const confirm = window.confirm('voulez-vous supprimer ce patient');
+    const confirm = window.confirm('voulez-vous supprimer ce client');
     if (confirm) {
       this.clientService.deleteTeam(id).subscribe(res => {
-          this.toast.success('Patient supprimer ', 'Supprimer', {
+          this.toast.success('Client supprimer ', 'Supprimer', {
             timeOut: 3000,
             positionClass: 'toast-bottom-right'
           });
           this.ngAfterViewInit();
         },
-        error => this.toast.error('something wrong '));
+        () => {
+          this.toast.success('Client supprimer ', 'Supprimer', {
+            timeOut: 3000,
+            positionClass: 'toast-bottom-right'
+          });
+          this.ngAfterViewInit();
+        })
     }
   }
 
@@ -91,9 +94,6 @@ export class ListClientComponent implements OnInit {
   }
 
 
-  onError(): void {
-    this.retrievedImage = this.defaultImage;
-  }
 
   add() {
 

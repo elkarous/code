@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RendezVousEntity} from 'src/models/RendezVous';
 import {TokenService} from '../Authentification/token.service';
 import {JournalisationT} from "../../models/JournalisationT";
 
@@ -28,24 +27,22 @@ export class JournalisationService {
   }
 
   delete(id: number) {
-    return this.http.delete(this.url + id);
+    return this.http.delete(this.url+ 'delete/' + id);
   }
 
-  demandeRDV(rdv: RendezVousEntity): Observable<RendezVousEntity>{
-    return this.http.post<RendezVousEntity>(this.url+'demandeRDV',rdv);
-  }
-
-  getAllrdv():Observable<RendezVousEntity[]>{
-    return this.http.get<RendezVousEntity[]>(this.url)
-  }
   getAll():Observable<JournalisationT[]>{
     return this.http.get<JournalisationT[]>(this.url+'getAll/')
 }
-refuserRdv(rdv:RendezVousEntity): Observable<RendezVousEntity>{
-  return this.http.put<RendezVousEntity>(this.url+'refuser', rdv)
-}
-  confirmerRdv(rdv:RendezVousEntity): Observable<RendezVousEntity>{
-    return this.http.put<RendezVousEntity>(this.url+'confirmer', rdv)
+  getNbreHeure(id:number ,date:Date):Observable<any[]>{
+    return this.http.get<any[]>(this.url+'getNbreHeure/'+ id+'/'+date.toDateString())
+  }
+
+  getAllEvent():Observable<any[]>{
+    return this.http.get<any[]>(this.url+'getAllEvent/')
+  }
+
+  getNbreHeureTotal(id:number,date:Date):Observable<number>{
+    return this.http.get<number>(this.url+'getNbreHeureTotal/'+ id+'/'+date.toDateString())
   }
 
 }

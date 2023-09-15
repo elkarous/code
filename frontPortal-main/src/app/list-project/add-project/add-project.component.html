@@ -1,47 +1,68 @@
 <div class="card-header">
-  <h2 mat-dialog-title > Modifier le  projet </h2>
+  <h2 mat-dialog-title> Ajouter une activité </h2>
 </div>
+<label id="example-radio-group-label" class="m-2">Choisir le type d'activité</label>
+<mat-radio-group
+  aria-labelledby="example-radio-group-label"
+  class="example-radio-group "
+  [(ngModel)]="typeTache">
+  <mat-radio-button class="example-radio-button m-2" *ngFor="let type of taskTypes" [value]="type">
+    {{type}}
+  </mat-radio-button>
+</mat-radio-group>
+<hr>
 <div class="row">
   <mat-form-field class="col-6" appearance="fill">
-    <mat-label>Nom de projet</mat-label>
-    <input matInput maxlength="10" [(ngModel)]="activite.nomA" placeholder="Entrer le nom ">
+    <mat-label>Nom de activité</mat-label>
+    <input matInput  [(ngModel)]="activite.nomA" placeholder="Entrer le nom ">
   </mat-form-field>
   <mat-form-field class="col-6" appearance="fill">
-    <mat-label>discription de projet</mat-label>
-    <input matInput maxlength="10" [(ngModel)]="activite.disc" placeholder="discription">
+    <mat-label>Discription de activité</mat-label>
+    <input matInput  [(ngModel)]="activite.disc" placeholder="Discription de activité">
   </mat-form-field>
 </div>
 <div class="row">
   <mat-form-field class="col-6" appearance="fill">
     <mat-label>Date de debut</mat-label>
-    <input matInput [(ngModel)]="activite.dateDebut"[matDatepicker]="picker">
+    <input matInput [(ngModel)]="activite.dateDebut" [matDatepicker]="picker">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
   <mat-form-field class="col-6" appearance="fill">
     <mat-label>Date de fin</mat-label>
-    <input matInput [(ngModel)]="activite.dateFin"[matDatepicker]="picker1">
+    <input matInput [(ngModel)]="activite.dateFin" [matDatepicker]="picker1">
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
   </mat-form-field>
 </div>
 <div class="row">
   <mat-form-field class="col-6" appearance="fill">
-    <mat-label>Type de projet</mat-label>
-    <input matInput maxlength="10" [(ngModel)]="activite.type" placeholder="Type le nom ">
+    <mat-label>Etat d'activité</mat-label>
+    <mat-select [(ngModel)]="activite.etat">
+      <mat-option value="En cour">En cour</mat-option>
+      <mat-option value="Terminé">Terminé</mat-option>
+    </mat-select>
   </mat-form-field>
   <mat-form-field class="col-6" appearance="fill">
-    <mat-label>Etat de projet</mat-label>
-    <input matInput maxlength="10" [(ngModel)]="activite.etat" placeholder="Etat">
+    <mat-label>Equipe</mat-label>
+    <mat-select [(ngModel)]="activite.equipe" [compareWith]="equipeCompare" placeholder="Equipe" required>
+      <mat-option *ngFor="let team of teamList" [value]="team"> {{team.nomE}}</mat-option>
+    </mat-select>
   </mat-form-field>
 </div>
-<mat-form-field class="col-6" appearance="fill">
-  <mat-label>Equipe</mat-label>
-  <mat-select   [(ngModel)]="activite.equipe" [compareWith]="equipeCompare" placeholder="Equipe" required>
-    <mat-option *ngFor="let team of teamList" [value]="team" > {{team.nomE}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Client</mat-label>
+    <mat-select [(ngModel)]="activite.site" [compareWith]="equipeCompare" placeholder="Client" required>
+      <mat-option *ngFor="let client of clients" [value]="client"> {{client.nomS}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="col-6" appearance="fill" *ngIf="typeTache !='Projet'">
+    <mat-label>Type d'activité non dev</mat-label>
+    <input matInput [(ngModel)]="activite.typeND" placeholder="Type d'activité non dev">
+  </mat-form-field>
+</div>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Fermer</button>
-  <button mat-button (click)="ajoutActivite()" cdkFocusInitial mat-dialog-close>Modifier</button>
+  <button mat-button (click)="ajoutActivite()"  mat-dialog-close>Ajouter</button>
 </mat-dialog-actions>

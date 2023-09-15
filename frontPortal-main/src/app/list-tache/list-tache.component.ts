@@ -10,6 +10,8 @@ import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
 import {UpdateTeemComponent} from "../list-team/update-teem/update-teem.component";
 import {AddTeamComponent} from "../list-team/add-team/add-team.component";
 import {TacheService} from "../services/tache.service";
+import {AddTacheComponent} from "./add-tache/add-tache.component";
+import {UpdateTacheComponent} from "./update-tache/update-tache.component";
 
 @Component({
   selector: 'app-list-tache',
@@ -19,7 +21,7 @@ import {TacheService} from "../services/tache.service";
 export class ListTacheComponent implements OnInit {
 
 
-  displayedColumns: string[] = [ 'nomT','dateDebut','dateFin','etat','disc', 'Actions'];
+  displayedColumns: string[] = ['nomT', 'dateDebut', 'dateFin', 'etat', 'disc', 'Actions'];
   private defaultImage = 'assets/img/logo.png';
   public imageUrl: string;
   dataSource: MatTableDataSource<any>;
@@ -32,7 +34,7 @@ export class ListTacheComponent implements OnInit {
   lang: any;
 
   constructor(private accountService: AccountService,
-              private tacheService:TacheService,
+              private tacheService: TacheService,
               private toast: ToastrService,
               private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.users);
@@ -66,16 +68,22 @@ export class ListTacheComponent implements OnInit {
   }
 
   deleteTeam(id: number) {
-    const confirm = window.confirm('voulez-vous supprimer ce patient');
+    const confirm = window.confirm('voulez-vous supprimer ce tache');
     if (confirm) {
       this.tacheService.delete(id).subscribe(res => {
-          this.toast.success('Patient supprimer ', 'Supprimer', {
+          this.toast.success('Tache supprimer ', 'Supprimer', {
             timeOut: 3000,
             positionClass: 'toast-bottom-right'
           });
           this.ngAfterViewInit();
         },
-        error => this.toast.error('something wrong '));
+        error => {
+          this.toast.success('Tache supprimer ', 'Supprimer', {
+            timeOut: 3000,
+            positionClass: 'toast-bottom-right'
+          });
+          this.ngAfterViewInit()
+        });
     }
   }
 
@@ -85,24 +93,17 @@ export class ListTacheComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
     dialogConfig.data = row;
-    this.dialog.open(UpdateTeemComponent, dialogConfig);
-
+    this.dialog.open(UpdateTacheComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => this.ngAfterViewInit());
   }
 
 
-  onError(): void {
-    this.retrievedImage = this.defaultImage;
-  }
-
   add() {
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '60%';
-    this.dialog.open(AddTeamComponent, dialogConfig);
-
+    this.dialog.open(AddTacheComponent, dialogConfig);
     this.dialog.afterAllClosed.subscribe(() => this.ngAfterViewInit());
   }
 

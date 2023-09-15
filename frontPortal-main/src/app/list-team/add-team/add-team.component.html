@@ -1,13 +1,18 @@
 <div class="card-header">
-  <h2 mat-dialog-title style="color: rgb(255, 255, 255);"> Ajouter un nouveau équipe </h2>
+  <h2 mat-dialog-title > Ajouter un nouveau équipe </h2>
 </div>
 <div class="row">
   <mat-form-field class="col-6" appearance="fill">
-    <mat-label>Prenom</mat-label>
-    <input matInput maxlength="10" [(ngModel)]="team.nomE" placeholder="Entrer le prenom ">
+    <mat-label>Nom d'équpe</mat-label>
+    <input matInput maxlength="10" [(ngModel)]="team.nomE" placeholder="Entrer le nom d'équipe " required>
   </mat-form-field>
 
-
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Chef d'équipe</mat-label>
+    <mat-select [(ngModel)]="team.chef" [compareWith]="userCompare" placeholder="Directeur" required>
+      <mat-option *ngFor="let u of users" [value]="u"> {{u.nom}} {{u.prenom}}</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <mat-dialog-actions align="end">

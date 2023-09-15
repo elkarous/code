@@ -1,0 +1,60 @@
+<div class="container">
+  <div class="row">
+    <div class="col-10">
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <h2 class="breadcrumb-item active mt-2" aria-current="page">Rapport  d'employé : {{employee.nom}} {{employee.prenom}}</h2>
+  </ol>
+</nav>
+    </div>
+    <div class="col-2 mt-2">
+
+      <p-calendar
+        view="month"
+        [formControl]="time"
+        dateFormat="mm/yy"
+        [readonlyInput]="false"
+        inputId="pickmonth"
+        placeholder="Pick any month">
+      </p-calendar>
+
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="row justify-content-between">
+      <mat-card class="col-3">
+        <mat-card-header>
+         Total d'heures de travail
+        </mat-card-header>
+        <mat-card-content class="text-center">
+          <h2>{{totalH}}h - 00m</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-3">
+        <mat-card-header>
+          Total d'heures de productivité
+        </mat-card-header>
+        <mat-card-content class="text-center">
+          <h2>{{total}} H 00 mn</h2>
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="col-3">
+        <mat-card-header>
+         Pourcentage de  productivité
+        </mat-card-header>
+        <mat-card-content class="text-center">
+          <h2>{{percent}} %</h2>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    <div class="row mt-3">
+      <mat-card>
+      <div class="mGraph-wrapper">
+        <span class="noData" *ngIf="data.length==0 " >No data</span>
+        <div class="mGraph" id="barChart"></div>
+      </div>
+      </mat-card>
+    </div>
+  </div>
+</div>

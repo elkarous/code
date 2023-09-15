@@ -20,8 +20,8 @@
   <mat-radio-group class="col-6" [(ngModel)]="user.sexe" aria-label="Select an option">
     <mat-label>Sexe</mat-label>
     <br>
-    <mat-radio-button value="Homme" style="color:blue;">Homme</mat-radio-button>
-    <mat-radio-button value="Femme" style="color:palevioletred;">Femme</mat-radio-button>
+    <mat-radio-button value="Homme"  class="m-2" >Homme</mat-radio-button>
+    <mat-radio-button value="Femme"  class="m-2">Femme</mat-radio-button>
   </mat-radio-group>
 </div>
 
@@ -76,8 +76,8 @@
     <input matInput type="password" placeholder="Mot de passe">
   </mat-form-field>
 </div>
-<div class="row" *ngIf="user.role.toString() !=='directeur_generale'">
-  <mat-form-field class="col-6" appearance="fill" *ngIf="user.role.toString() !=='chef_service'">
+<div class="row" *ngIf="user?.role?.toString() !=='directeur_generale'">
+  <mat-form-field class="col-6" appearance="fill" *ngIf="user?.role?.toString() !=='chef_service'">
     <mat-label>Equipe</mat-label>
     <mat-select [(ngModel)]="user.equipe"
                 (selectionChange)="equipeChange($event.value)"

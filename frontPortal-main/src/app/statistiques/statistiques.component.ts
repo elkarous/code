@@ -1,6 +1,8 @@
 import {Component, ElementRef, OnInit} from '@angular/core';
 import * as echarts from "echarts";
 import $ from 'jquery';
+import {JournalisationService} from "../services/journalisation.service";
+import {TokenService} from "../Authentification/token.service";
 @Component({
   selector: 'app-statistiques',
   templateUrl: './statistiques.component.html',
@@ -10,9 +12,9 @@ export class StatistiquesComponent implements OnInit {
   base = +new Date(1968, 9, 3);
   oneDay = 24 * 3600 * 1000;
   date = [];
-  data = [Math.random() * 300];
+  data = [];
    colors = ['#5470C6', '#EE6666'];
-
+  id :number;
   optionLine = {
     color: this.colors,
 
@@ -112,7 +114,11 @@ export class StatistiquesComponent implements OnInit {
       }
     ]
   };
-  constructor(private elm: ElementRef) {
+  constructor(private elm: ElementRef,
+              private tokenService:TokenService,
+              private journalisationService:JournalisationService) {
+    this.id = Number(this.tokenService.getId());
+
   }
   option = {
     title: {
@@ -151,23 +157,20 @@ export class StatistiquesComponent implements OnInit {
   };
   ngOnInit() {
     let barChart = echarts.init($(this.elm.nativeElement).find('#barChart')[0]);
-    // set chart Data
-    for (var i = 1; i < 20000; i++) {
-      var now = new Date(this.base += this.oneDay);
-      this.date.push([now.getFullYear(), now.getMonth() + 1, now.getDate()].join('/'));
-      this.data.push(Math.round((Math.random() - 0.5) * 20 + this.data[i - 1]));
-    }
+    this.journalisationService.getNbreHeure(this.id).subscribe(response=>{
+      response.forEach(item=>{
+        const dateItem = new Date(item.date)
+        this.date.push([dateItem.getFullYear(), dateItem.getMonth() + 1, dateItem.getDate()].join('/'));
+        this.data.push(item.nbr);
+      })
 
     barChart.setOption({
       tooltip: {
         trigger: 'axis',
-        position: function (pt) {
-          return [pt[0], '10%'];
-        }
       },
       title: {
         left: 'center',
-        text: 'Line Chart',
+        text: 'Nombre heure de travail par jour',
       },
       toolbox: {
         feature: {
@@ -181,36 +184,26 @@ export class StatistiquesComponent implements OnInit {
       },
       xAxis: {
         type: 'category',
-        boundaryGap: false,
         data: this.date
       },
       yAxis: {
         type: 'value',
-        boundaryGap: [0, '100%']
+        max:12
       },
       series: [
         {
-          name: 'year',
+          name: 'Heures',
           type: 'bar',
           smooth: true,
           symbol: 'none',
           sampling: 'average',
-          itemStyle: {
-            color: 'rgb(255, 70, 131)'
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
-              offset: 0,
-              color: 'rgb(255, 158, 68)'
-            }, {
-              offset: 1,
-              color: 'rgb(255, 70, 131)'
-            }])
-          },
           data: this.data
         }
       ]
     })
+      console.log(this.date)
+      console.log(this.data)
+    });
     let piChart = echarts.init($(this.elm.nativeElement).find('#piChart')[0]);
     piChart.setOption(this.option);
     let lineChart = echarts.init($(this.elm.nativeElement).find('#lineChart')[0]);

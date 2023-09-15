@@ -1,7 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {RendezVousEntity} from 'src/models/RendezVous';
 import {TokenService} from '../Authentification/token.service';
 import {Tache} from "../../models/Tache";
 
@@ -28,24 +27,13 @@ export class TacheService {
   }
 
   delete(id: number) {
-    return this.http.delete(this.url + id);
+    return this.http.delete(this.url +'delete/'+ id);
   }
 
-  demandeRDV(rdv: RendezVousEntity): Observable<RendezVousEntity>{
-    return this.http.post<RendezVousEntity>(this.url+'demandeRDV',rdv);
-  }
 
-  getAllrdv():Observable<RendezVousEntity[]>{
-    return this.http.get<RendezVousEntity[]>(this.url)
-  }
   getAll():Observable<Tache[]>{
     return this.http.get<Tache[]>(this.url+'getAll/')
 }
-refuserRdv(rdv:RendezVousEntity): Observable<RendezVousEntity>{
-  return this.http.put<RendezVousEntity>(this.url+'refuser', rdv)
-}
-  confirmerRdv(rdv:RendezVousEntity): Observable<RendezVousEntity>{
-    return this.http.put<RendezVousEntity>(this.url+'confirmer', rdv)
-  }
+
 
 }

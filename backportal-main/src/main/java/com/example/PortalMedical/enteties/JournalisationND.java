@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
@@ -14,7 +15,10 @@ public class JournalisationND {
     @Id
     @GeneratedValue(strategy  = GenerationType.IDENTITY)
     private Long idJND ;
-    private  int nbheure ;
+    private  long nbheure ;
+    private Date dateDebut ;
+    private Date dateFin  ;
+    private String description;
     @JsonBackReference(value="activite")
     @ManyToOne
     private ActiviteND  activiteND;

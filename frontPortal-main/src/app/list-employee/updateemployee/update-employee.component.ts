@@ -50,6 +50,7 @@ export class UpdateEmployeeComponent implements OnInit {
   getAllTeam() {
     this.teamService.getAll().subscribe((response) => {
       this.teamList = response;
+      this.user = this.user
     })
 
   }

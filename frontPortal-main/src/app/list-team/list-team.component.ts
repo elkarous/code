@@ -7,8 +7,8 @@ import {AccountService} from "../services/account.service";
 import {ProjectService} from "../services/project.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {UpdateEmployeeComponent} from "../gestion-des-patients/updateemployee/update-employee.component";
-import {AddEmployeetComponent} from "../gestion-des-patients/addemployee/add-employeet.component";
+import {UpdateEmployeeComponent} from "../list-employee/updateemployee/update-employee.component";
+import {AddEmployeetComponent} from "../list-employee/addemployee/add-employeet.component";
 import {TeamService} from "../services/team.service";
 import {AddTeamComponent} from "./add-team/add-team.component";
 import {UpdateTeemComponent} from "./update-teem/update-teem.component";
@@ -20,7 +20,7 @@ import {UpdateTeemComponent} from "./update-teem/update-teem.component";
 })
 export class ListTeamComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'nomE', 'Actions'];
+  displayedColumns: string[] = [ 'nomE','chef', 'Actions'];
   private defaultImage = 'assets/img/logo.png';
   public imageUrl: string;
   dataSource: MatTableDataSource<any>;
@@ -67,16 +67,23 @@ export class ListTeamComponent implements OnInit {
   }
 
   deleteTeam(id: number) {
-    const confirm = window.confirm('voulez-vous supprimer ce patient');
+    const confirm = window.confirm('voulez-vous supprimer ce equipe');
     if (confirm) {
-      this.teamService.deleteTeam(id).subscribe(res => {
-          this.toast.success('Patient supprimer ', 'Supprimer', {
+      this.teamService.deleteTeam(id).subscribe(
+        () => {
+          this.toast.success('Equipe supprimer ', 'Supprimer', {
             timeOut: 3000,
             positionClass: 'toast-bottom-right'
           });
           this.ngAfterViewInit();
         },
-        error => this.toast.error('something wrong '));
+        () => {
+          this.toast.success('Equipe supprimer ', 'Supprimer', {
+            timeOut: 3000,
+            positionClass: 'toast-bottom-right'
+          });
+          this.ngAfterViewInit();
+        })
     }
   }
 

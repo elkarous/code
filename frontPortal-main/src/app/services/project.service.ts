@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Patient} from "../../models/Patient";
 import {Observable} from "rxjs";
 import {Activite} from "../../models/Activite";
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,9 @@ export class ProjectService {
     return  this.http.get<Activite[]>(this.url+'getAll')
   }
 
+  getById(id:number):Observable<Activite>{
+    return  this.http.get<Activite>(this.url+'getById/'+ id)
+  }
   updateActivite(activite:Activite):Observable<Activite>{
     return this.http.put<Activite>(this.url+'update/'+ activite.idA,activite)
   }

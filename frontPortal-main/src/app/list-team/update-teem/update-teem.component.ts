@@ -14,7 +14,7 @@ import {TeamService} from "../../services/team.service";
 })
 export class UpdateTeemComponent implements OnInit {
 
-
+  users = [];
   email = new FormControl('', [Validators.required, Validators.email]);
   hide = true;
   close=false;
@@ -25,8 +25,9 @@ export class UpdateTeemComponent implements OnInit {
   retrievedImage: string;
   constructor(private teamService:TeamService,
               private toast:ToastrService,
+              private accountService: AccountService,
               @Inject(MAT_DIALOG_DATA) public team: Equipe) {
-
+this.getAllChef();
   }
 
 
@@ -48,6 +49,14 @@ export class UpdateTeemComponent implements OnInit {
     )
 
   }
+  getAllChef() {
+    this.accountService.getAllUsersByRole('chef_equipe').subscribe((response) => {
+      this.users = response;
+    })
+  }
 
+  userCompare(user: any, u: any) {
+    return user.id = u.id;
+  }
 
 }

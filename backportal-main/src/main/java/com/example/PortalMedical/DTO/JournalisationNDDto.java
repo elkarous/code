@@ -1,5 +1,7 @@
-package com.example.PortalMedical.enteties;
+package com.example.PortalMedical.DTO;
 
+import com.example.PortalMedical.enteties.ActiviteND;
+import com.example.PortalMedical.enteties.UserEntity;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,22 +12,14 @@ import javax.persistence.*;
 import java.util.Date;
 
 
-@Entity
 @Data @AllArgsConstructor @NoArgsConstructor @ToString
-public class JournalisationT {
-    @Id
-    @GeneratedValue(strategy  = GenerationType.IDENTITY)
-    private Long idJT ;
-    private  long nbheure ;
+public class JournalisationNDDto {
+
+    private Long idJND ;
+    private  int nbheure ;
     private Date dateDebut ;
     private Date dateFin  ;
     private String description;
-    @JsonBackReference(value="tache")
-   @ManyToOne
-    private Tache  tache;
-    @JsonBackReference(value="personne")
-    @ManyToOne
-    private UserEntity  personne ;
-
+    private ActiviteND activiteND;
+    private UserEntity personne ;
 }
-

@@ -8,14 +8,15 @@ import {AccountService} from 'src/app/services/account.service';
 import {UserEntity} from 'src/models/userEntity';
 import {AddEmployeetComponent} from './addemployee/add-employeet.component';
 import {UpdateEmployeeComponent} from './updateemployee/update-employee.component';
+import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-gestion-des-patients',
+  selector: 'app-list-employee',
   templateUrl: './list-employee.component.html',
   styleUrls: ['./list-employee.component.css']
 })
 export class ListEmployeeComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['email', 'nom', 'prenom', 'sexe', 'age', 'creation_date', 'numtelephone', 'Actions'];
+  displayedColumns: string[] = ['email', 'nom', 'prenom', 'sexe','role', 'age', 'creation_date', 'numtelephone', 'Actions'];
   private defaultImage = 'assets/img/logo.png';
   public imageUrl: string;
   dataSource: MatTableDataSource<any>;
@@ -29,6 +30,7 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
 
   constructor(private accountService: AccountService,
               private toast: ToastrService,
+              private router:Router,
               private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.users);
   }
@@ -61,10 +63,10 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
   }
 
   deleteUser(id: number) {
-    const confirm = window.confirm('voulez-vous supprimer ce patient');
+    const confirm = window.confirm('voulez-vous supprimer ce employé');
     if (confirm) {
       this.accountService.deleteUser(id).subscribe(res => {
-          this.toast.success('Patient supprimer ', 'Supprimer', {
+          this.toast.success('Employee supprimer ', 'Supprimer', {
             timeOut: 3000,
             positionClass: 'toast-bottom-right'
           });
@@ -99,5 +101,11 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
     this.dialog.open(AddEmployeetComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => this.ngAfterViewInit());
+  }
+
+  riderect(id) {
+    const url = '/dashboard/reporting/'+id;
+    this.router.navigateByUrl(url).then();
+
   }
 }

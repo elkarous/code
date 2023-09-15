@@ -1,8 +1,11 @@
 package com.example.PortalMedical.Services;
 
+import com.example.PortalMedical.DTO.ActiviteDto;
+import com.example.PortalMedical.DTO.JournalisationTDto;
 import com.example.PortalMedical.Repositories.ActiviteRepository;
-import com.example.PortalMedical.enteties.Activite;
+import com.example.PortalMedical.enteties.*;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,9 +21,20 @@ public class ActiviteServiceImpl implements ActiviteService{
     }
 
     @Override
-    public Activite getActiviteById(Long activiteId) {
+    public ActiviteDto getActiviteById(Long activiteId) {
         Optional<Activite> optionalActivite = activiteRepository.findById(activiteId);
-        return optionalActivite.get();
+
+        if (optionalActivite.isPresent()) {
+            Activite activite = optionalActivite.get();
+            ModelMapper modelMapper = new ModelMapper();
+            ActiviteDto activiteDto = modelMapper.map(activite, ActiviteDto.class);
+            Site site = activiteRepository.getSiteByTask(activiteId);
+            activiteDto.setSite(site);
+            Equipe equipe = activiteRepository.getTeamByTask(activiteId);
+            activiteDto.setEquipe(equipe);
+            return activiteDto;
+        }
+        return null;
     }
 
     @Override

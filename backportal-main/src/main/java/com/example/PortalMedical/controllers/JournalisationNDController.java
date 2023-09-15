@@ -1,5 +1,6 @@
 package com.example.PortalMedical.controllers;
 
+import com.example.PortalMedical.DTO.JournalisationNDDto;
 import com.example.PortalMedical.Services.JournalisationNDService;
 import com.example.PortalMedical.enteties.JournalisationND;
 
@@ -24,8 +25,8 @@ public class JournalisationNDController {
 
 
     @GetMapping("/getById/{id}")
-    public ResponseEntity<JournalisationND> getJournalisationNDById(@PathVariable("id") Long journalisationNDId){
-        JournalisationND journalisationND = journalisationNDService.getJournalisationNDById(journalisationNDId);
+    public ResponseEntity<JournalisationNDDto> getJournalisationNDById(@PathVariable("id") Long journalisationNDId){
+        JournalisationNDDto journalisationND = journalisationNDService.getJournalisationNDById(journalisationNDId);
         return new ResponseEntity<>(journalisationND, HttpStatus.OK);
     }
 

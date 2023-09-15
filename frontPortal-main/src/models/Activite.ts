@@ -8,6 +8,7 @@ export class Activite {
   dateDebut: Date;
   dateFin: Date;
   etat: string;
+  typeND: string;
   disc: string;
   equipe: Equipe;
   site: Site;

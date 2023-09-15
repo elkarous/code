@@ -6,8 +6,6 @@ import {UserEntity} from "../../models/userEntity";
 import {AccountService} from "../services/account.service";
 import {ToastrService} from "ngx-toastr";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {UpdateEmployeeComponent} from "../gestion-des-patients/updateemployee/update-employee.component";
-import {AddEmployeetComponent} from "../gestion-des-patients/addemployee/add-employeet.component";
 import {ProjectService} from "../services/project.service";
 import {AddProjectComponent} from "./add-project/add-project.component";
 import {UpdateProjectComponent} from "./update-project/update-project.component";
@@ -19,7 +17,7 @@ import {UpdateProjectComponent} from "./update-project/update-project.component"
 })
 export class ListProjectComponent implements OnInit {
 
-  displayedColumns: string[] = [ 'nomA', 'type', 'dateDebut', 'dateFin', 'etat', 'disc', 'Actions'];
+  displayedColumns: string[] = [ 'nomA', 'type', 'dateDebut', 'dateFin', 'etat','nbrTache','typeND', 'disc', 'Actions'];
   private defaultImage = 'assets/img/logo.png';
   public imageUrl: string;
   dataSource: MatTableDataSource<any>;
@@ -65,11 +63,11 @@ export class ListProjectComponent implements OnInit {
     );
   }
 
-  deleteUser(id: number) {
-    const confirm = window.confirm('voulez-vous supprimer ce patient');
+  delete(id: number) {
+    const confirm = window.confirm('voulez-vous supprimer ce activité');
     if (confirm) {
       this.accountService.deleteUser(id).subscribe(res => {
-          this.toast.success('Patient supprimer ', 'Supprimer', {
+          this.toast.success('activité supprimer ', 'Supprimer', {
             timeOut: 3000,
             positionClass: 'toast-bottom-right'
           });
@@ -104,5 +102,14 @@ export class ListProjectComponent implements OnInit {
     this.dialog.open(AddProjectComponent, dialogConfig);
 
     this.dialog.afterAllClosed.subscribe(() => this.ngAfterViewInit());
+  }
+
+  getNombreDeTache(element):number{
+    let i = 0
+    if(element && element.taches ){
+      i = element.taches.length;
+    }
+
+    return i;
   }
 }

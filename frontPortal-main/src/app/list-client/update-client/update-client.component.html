@@ -1,1 +1,16 @@
-<p>update-client works!</p>
+<div class="card-header">
+  <h2 mat-dialog-title > Modifier le  client </h2>
+</div>
+<div class="row">
+  <mat-form-field class="col-6" appearance="fill">
+    <mat-label>Nom de client</mat-label>
+    <input matInput  [(ngModel)]="client.nomS" placeholder="Entrer le nom de client ">
+  </mat-form-field>
+
+
+</div>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Fermer</button>
+  <button mat-button (click)="addTeam()" cdkFocusInitial mat-dialog-close>Ajouter</button>
+</mat-dialog-actions>

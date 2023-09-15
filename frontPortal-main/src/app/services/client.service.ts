@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Patient} from "../../models/Patient";
 import {Observable} from "rxjs";
 import {Activite} from "../../models/Activite";
 import {UserEntity} from "../../models/userEntity";
