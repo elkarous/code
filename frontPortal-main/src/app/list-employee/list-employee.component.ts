@@ -9,6 +9,7 @@ import {UserEntity} from 'src/models/userEntity';
 import {AddEmployeetComponent} from './addemployee/add-employeet.component';
 import {UpdateEmployeeComponent} from './updateemployee/update-employee.component';
 import {Router} from "@angular/router";
+import {TokenService} from "../Authentification/token.service";
 
 @Component({
   selector: 'app-list-employee',
@@ -27,12 +28,15 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
   base64Data: Int8Array;
   retrievedImage: string;
   lang: any;
+   connectedUser: UserEntity;
 
   constructor(private accountService: AccountService,
               private toast: ToastrService,
               private router:Router,
+              private tokenService:TokenService,
               private dialog: MatDialog) {
     this.dataSource = new MatTableDataSource(this.users);
+    this.connectedUser = tokenService.getUser();
   }
 
   ngOnInit(): void {
@@ -56,10 +60,17 @@ export class ListEmployeeComponent implements AfterViewInit, OnInit {
   }
 
   getAllUser() {
-    this.accountService.getAllUsers().subscribe(data => {
-        this.dataSource.data = data;
-      }
-    );
+    if(this.connectedUser.role.toString() === 'chef_equipe'){
+      this.accountService.getAllUsersByEquipe(this.connectedUser.equipe.idE).subscribe(data => {
+          this.dataSource.data = data;
+        }
+      );
+    }else {
+      this.accountService.getAllUsers().subscribe(data => {
+          this.dataSource.data = data;
+        }
+      );
+    }
   }
 
   deleteUser(id: number) {

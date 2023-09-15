@@ -136,4 +136,9 @@ if(!userEntity.getRole().equals(Role.directeur_generale)) {
 		return patient;
 	}
 
+    @Override
+    public List<UserEntity> getByEquipe(long id) {
+       return userRepository.findAllByEquipeIdE(id);
+    }
+
 	}

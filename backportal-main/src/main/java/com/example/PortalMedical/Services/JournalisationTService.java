@@ -17,7 +17,7 @@ public interface JournalisationTService {
 
     List< JournalisationT > getAllJournalisationT ();
 
-    List<Event> getAllEvent();
+    List<Event> getAllEvent(long userId);
 
     JournalisationT  updateJournalisationT (JournalisationT  journalisationT );
 

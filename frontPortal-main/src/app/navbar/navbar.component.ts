@@ -4,7 +4,9 @@ import {Router} from '@angular/router';
 import {UserEntity} from '../../models/userEntity';
 import {LoaderService} from '../services/loader.service';
 import {AccountService} from '../services/account.service';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogConfig} from '@angular/material/dialog';
+import {AddEmployeetComponent} from "../list-employee/addemployee/add-employeet.component";
+import {UpdateEmployeeComponent} from "../list-employee/updateemployee/update-employee.component";
 
 @Component({
   selector: 'app-navbar',
@@ -12,24 +14,24 @@ import {MatDialog} from '@angular/material/dialog';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
-  private defaultImage = 'assets/img/logo.png';
-  public imageUrl: string;
+
   user: UserEntity;
-  selectedFile: File;
-  retrievedImage: any;
-  base64Data: any;
+  id: number;
+  role = '';
+  isEmployee = false
 
   constructor(private tokenService: TokenService,
               private router: Router,
-              public LoadService: LoaderService,
               private accountService: AccountService,
               private dialog: MatDialog) {
+    this.id = Number(this.tokenService.getId())
+    this.role = this.tokenService.getRole();
+
   }
 
   ngOnInit(): void {
     this.getUserById();
   }
-
 
 
   getUserById() {
@@ -44,4 +46,20 @@ export class NavbarComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
+  openUpdateDialog() {
+    this.accountService.getById(this.id).subscribe((row) => {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '60%';
+      dialogConfig.height = '90%'
+      dialogConfig.data = row;
+      this.dialog.open(UpdateEmployeeComponent, dialogConfig);
+    });
+  }
+
+  redirect() {
+    const url = '/dashboard/reporting/' + this.id;
+    this.router.navigateByUrl(url).then();
+  }
 }

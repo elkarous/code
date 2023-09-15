@@ -55,9 +55,9 @@ public class JournalisatinTController {
         return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
     }
 
-    @GetMapping("/getAllEvent")
-    public ResponseEntity<List<Event>> getAllEvent(){
-        List<Event> journalisationTs= journalisationTService.getAllEvent();
+    @GetMapping("/getAllEvent/{id}")
+    public ResponseEntity<List<Event>> getAllEvent(@PathVariable("id") Long id){
+        List<Event> journalisationTs= journalisationTService.getAllEvent(id);
         return new ResponseEntity<>(journalisationTs, HttpStatus.OK);
     }
 

@@ -41,6 +41,7 @@ export class CalenderComponent implements OnInit {
   heurStart = '';
   heurEnd = '';
   id: number;
+  userId: number;
   typeJournalisationT = 'Tache';
   taskTypes = ['Tache', 'Normale']
   headerText = '';
@@ -57,6 +58,7 @@ export class CalenderComponent implements OnInit {
               private fb: FormBuilder,
               private toastr: ToastrService) {
     this.connectedUser = tokenService.getUser();
+    this.userId = this.connectedUser.id;
   }
 
   ngAfterViewInit() {
@@ -197,7 +199,7 @@ export class CalenderComponent implements OnInit {
   }
 
   getAllEvent() {
-    this.journalisationService.getAllEvent().subscribe(data => {
+    this.journalisationService.getAllEvent(this.userId).subscribe(data => {
       this.calendarOptions.events = [];
       for (let item of data) {
         let daystart = formatDate(item.dateDebut, 'yyyy-MM-dd HH:mm:ss', 'en_Us');

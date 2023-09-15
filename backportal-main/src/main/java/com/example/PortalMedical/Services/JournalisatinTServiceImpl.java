@@ -6,9 +6,11 @@ import com.example.PortalMedical.DTO.ReportingDto;
 import com.example.PortalMedical.Repositories.JournalisationNDRepository;
 import com.example.PortalMedical.Repositories.JournalisationTRepository;
 
+import com.example.PortalMedical.Repositories.UserRepository;
 import com.example.PortalMedical.enteties.JournalisationND;
 import com.example.PortalMedical.enteties.JournalisationT;
 import com.example.PortalMedical.enteties.Tache;
+import com.example.PortalMedical.enteties.UserEntity;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +32,9 @@ public class JournalisatinTServiceImpl implements JournalisationTService {
     private JournalisationTRepository journalisationTRepository;
     @Autowired
     private JournalisationNDRepository journalisationNDRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public JournalisationT addJournalisationT(JournalisationT journalisationT) {
@@ -67,11 +73,29 @@ public class JournalisatinTServiceImpl implements JournalisationTService {
     }
 
     @Override
-    public List<Event> getAllEvent() {
-        List<JournalisationT> journalisationTS = journalisationTRepository.findAll();
-        List<Event> events = journalisationTS.stream().map(Event::mapFromJounalinationT).collect(Collectors.toList());
-
-        List<JournalisationND> journalisationNS = journalisationNDRepository.findAll();
+    public List<Event> getAllEvent(long userId) {
+        List<JournalisationT> journalisationTS = new ArrayList<>();
+        List<JournalisationND> journalisationNS = new ArrayList<>();
+        UserEntity user =  this.userRepository.findById(userId).get();
+        switch (user.getRole()){
+            case chef_equipe:
+                long equipeId = user.getEquipe().getIdE();
+                journalisationTS = journalisationTRepository.findAllByPersonne_Equipe_IdE(equipeId);
+                journalisationNS = journalisationNDRepository.findAllByPersonne_Equipe_IdE(equipeId);
+                break;
+            case chef_service:
+            case directeur_generale:
+                journalisationTS = journalisationTRepository.findAll();
+                journalisationNS = journalisationNDRepository.findAll();
+                break;
+            case employee:
+                journalisationTS = journalisationTRepository.findAllByPersonne_Id(userId);
+                journalisationNS = journalisationNDRepository.findAllByPersonne_Id(userId);
+                break;
+            default:
+                break;
+        }
+       List<Event>  events = journalisationTS.stream().map(Event::mapFromJounalinationT).collect(Collectors.toList());
         List<Event> eventsFromN = journalisationNS.stream().map(Event::mapFromJounalinationND).collect(Collectors.toList());
         events.addAll(eventsFromN);
 

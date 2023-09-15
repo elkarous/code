@@ -25,6 +25,10 @@ export class TokenService {
     return JSON.parse(localStorage.getItem('user'));
   }
 
+  getRole() {
+    return localStorage.getItem('role');
+  }
+
   getId() {
     return localStorage.getItem('id');
   }

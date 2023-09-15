@@ -15,6 +15,11 @@ public interface JournalisationTRepository extends JpaRepository<JournalisationT
     @Query("select j.tache from JournalisationT j where j.idJT = :id ")
     Tache getTacheByTask(@Param("id") long id);
 
+
+    List<JournalisationT> findAllByPersonne_Id(long personne_id);
+
+    List<JournalisationT> findAllByPersonne_Equipe_IdE(long personne_id);
+
     @Query(value = "SELECT SUM(valeur) as nbr ,d as date\n" +
             "FROM (select sum(nbheure) as valeur, DATE_FORMAT(date_debut, '%d/%m/%Y') as d\n" +
             "from journalisationt\n" +

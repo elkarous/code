@@ -19,5 +19,7 @@ public interface UserService extends UserDetailsService {
     void updatePassword(UserEntity  user, String newPassword);
     public UserDTO addUserwithoutpassword(UserDTO UserDTO);
     List<UserEntity> getByRole(String role);
-    }
+
+    List<UserEntity> getByEquipe(long id);
+}
 

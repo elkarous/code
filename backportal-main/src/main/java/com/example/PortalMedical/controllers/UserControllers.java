@@ -90,6 +90,11 @@ public class UserControllers {
     public List<UserEntity> getbyRole(@PathVariable(name = "role") String role) {
         return userService.getByRole(role);
     }
+
+    @GetMapping("getbyEquipe/{id}")
+    public List<UserEntity> getbyRole(@PathVariable(name = "id") long id) {
+        return userService.getByEquipe(id);
+    }
     @GetMapping("/{id}")
     public UserDTO getUserById(@PathVariable(name = "id") long id) {
         return userService.getUserById(id);

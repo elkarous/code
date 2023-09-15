@@ -41,6 +41,10 @@ export class AccountService {
     return this.http.get<UserEntity[]>(this.url);
   }
 
+  getAllUsersByEquipe(id:number): Observable<UserEntity[]> {
+    return this.http.get<UserEntity[]>(this.url+ 'getbyEquipe/'+ id);
+  }
+
   addUser(formData: FormData): Observable<UserEntity> {
     return this.http.post<UserEntity>(this.url + 'register', formData);
   }

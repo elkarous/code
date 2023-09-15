@@ -27,10 +27,15 @@ mat-toolbar{
 .navcontent{
   margin-left: 5%;
 }
+
+.navcontent1{
+  margin-left: 70%;
+}
 .title{
   color: black;
   border: solid 1px ;
   border-radius: 3px;
   padding: 4px;
+  margin-right: 10px;
   font-weight: normal;
 }

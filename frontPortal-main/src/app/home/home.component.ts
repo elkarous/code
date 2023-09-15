@@ -107,8 +107,10 @@ export class HomeComponent implements OnInit {
     );
     this.account.getById(Number(this.token.getId())).subscribe((response)=>{
       localStorage.setItem('user',JSON.stringify(response))
+      localStorage.setItem('role',response.role.toString())
+      this.router.navigateByUrl('/dashboard/calender');
     })
- this.router.navigateByUrl('/dashboard');
+
 
   }
 

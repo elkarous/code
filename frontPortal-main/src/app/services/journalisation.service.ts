@@ -37,8 +37,8 @@ export class JournalisationService {
     return this.http.get<any[]>(this.url+'getNbreHeure/'+ id+'/'+date.toDateString())
   }
 
-  getAllEvent():Observable<any[]>{
-    return this.http.get<any[]>(this.url+'getAllEvent/')
+  getAllEvent(id:number):Observable<any[]>{
+    return this.http.get<any[]>(this.url+'getAllEvent/'+ id)
   }
 
   getNbreHeureTotal(id:number,date:Date):Observable<number>{

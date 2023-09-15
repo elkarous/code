@@ -20,12 +20,10 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
 import {ToastrModule} from 'ngx-toastr';
-import {PageAdminComponent} from './page-admin/page-admin.component';
 import {MatMenuModule} from '@angular/material/menu';
 
 
 import {ListEmployeeComponent} from './list-employee/list-employee.component';
-import {StatistiquesComponent} from './statistiques/statistiques.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorIntl, MatPaginatorModule} from '@angular/material/paginator';
 import {UpdateEmployeeComponent} from './list-employee/updateemployee/update-employee.component';
@@ -73,9 +71,7 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     PasswordComponent,
     HomeComponent,
     ResetPasswordComponent,
-    PageAdminComponent,
     ListEmployeeComponent,
-    StatistiquesComponent,
     UpdateEmployeeComponent,
     AddEmployeetComponent,
     AcceuilComponent,
